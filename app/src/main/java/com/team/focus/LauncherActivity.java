@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -24,10 +23,9 @@ public class LauncherActivity extends AppCompatActivity {
         Intent nextActivity = didUserLogin ? new Intent(this, MainActivity.class) :
                 new Intent(this, LoginActivity.class);
         if (didUserLogin) {
-            String username = sharedPreferences.getString("username", null);
-            StringBuilder welcome = new StringBuilder("Welcome back, ");
-            welcome.append(username);
-            Toast.makeText(getApplicationContext(), welcome.toString(), Toast.LENGTH_LONG).show();
+            String username = sharedPreferences.getString("username", "");
+            String welcome = "Welcome back " + username;
+            Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
         }
 
         startActivity(nextActivity);

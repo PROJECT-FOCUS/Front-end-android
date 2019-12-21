@@ -1,8 +1,15 @@
 package com.team.focus;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.team.focus.data.SharedPreferenceAccessUtils;
+import com.team.focus.ui.login.LoginActivity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
@@ -27,4 +34,10 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navView, navController);
     }
 
+    public void logout(View view) {
+        SharedPreferenceAccessUtils.removeLoginUser(view.getContext());
+        Intent login = new Intent(view.getContext(), LoginActivity.class);
+        startActivity(login);
+        finish();
+    }
 }

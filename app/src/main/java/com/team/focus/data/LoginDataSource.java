@@ -23,12 +23,7 @@ public class LoginDataSource {
     public Result<LoggedInUser> login(String username, String password) {
         try {
             LoggedInUser user = Account.loginOrRegister(username, password);
-            SharedPreferences.Editor editor = context.getSharedPreferences("FOCUS",
-                    Context.MODE_PRIVATE).edit();
-            editor.putBoolean("didUserLogin", true);
-            editor.putString("userID", user.getUserId());
-            editor.putString("username", user.getDisplayName());
-            editor.commit();
+            SharedPreferenceAccessUtils.setLoginUser(context, user);
             return new Result.Success<>(user);
         } catch (Exception e) {
             return new Result.Error(new IOException("Error logging in", e));
@@ -36,11 +31,6 @@ public class LoginDataSource {
     }
 
     public void logout() {
-        SharedPreferences.Editor editor = context.getSharedPreferences("FOCUS",
-                Context.MODE_PRIVATE).edit();
-        editor.putBoolean("didUserLogin", false);
-        editor.putString("userID", null);
-        editor.putString("username", null);
-        editor.commit();
+        SharedPreferenceAccessUtils.removeLoginUser(context);
     }
 }
