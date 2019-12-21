@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import android.content.Context;
 import android.util.Patterns;
 
 import com.team.focus.data.LoginRepository;
@@ -27,6 +28,10 @@ public class LoginViewModel extends ViewModel {
 
     LiveData<LoginResult> getLoginResult() {
         return loginResult;
+    }
+
+    public void setContext(Context context) {
+        loginRepository.setContext(context);
     }
 
     public void login(String username, String password) {
