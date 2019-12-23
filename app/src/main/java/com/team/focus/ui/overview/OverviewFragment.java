@@ -22,8 +22,8 @@ public class OverviewFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         overviewViewModel =
                 ViewModelProviders.of(this).get(OverviewViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_settings, container, false);
-        final TextView textView = root.findViewById(R.id.text_home);
+        View root = inflater.inflate(R.layout.fragment_overview, container, false);
+        final TextView textView = root.findViewById(R.id.text_overview);
         overviewViewModel.getText().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {

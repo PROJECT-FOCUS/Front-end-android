@@ -24,7 +24,7 @@ public class LauncherActivity extends AppCompatActivity {
                 new Intent(this, LoginActivity.class);
         if (didUserLogin) {
             String username = sharedPreferences.getString("username", "");
-            String welcome = "Welcome back " + username;
+            String welcome = getString(R.string.welcome_back) + username;
             Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
         }
 
