@@ -1,4 +1,4 @@
-package com.team.focus.ui.login;
+package com.team.focus;
 
 import android.app.Activity;
 
@@ -27,6 +27,9 @@ import android.widget.Toast;
 
 import com.team.focus.MainActivity;
 import com.team.focus.R;
+import com.team.focus.ui.login.LoggedInUserView;
+import com.team.focus.ui.login.LoginFormState;
+import com.team.focus.ui.login.LoginResult;
 import com.team.focus.ui.login.LoginViewModel;
 import com.team.focus.ui.login.LoginViewModelFactory;
 
@@ -44,7 +47,7 @@ public class LoginActivity extends AppCompatActivity {
         final EditText usernameEditText = findViewById(R.id.username);
         final EditText passwordEditText = findViewById(R.id.password);
         final Button loginButton = findViewById(R.id.login);
-        final ProgressBar loadingProgressBar = findViewById(R.id.loading);
+        final TextView register = findViewById(R.id.switch2Register);
 
         loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
             @Override
@@ -68,7 +71,6 @@ public class LoginActivity extends AppCompatActivity {
                 if (loginResult == null) {
                     return;
                 }
-                loadingProgressBar.setVisibility(View.GONE);
                 if (loginResult.getError() != null) {
                     showLoginFailed(loginResult.getError());
                 }
@@ -116,9 +118,18 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadingProgressBar.setVisibility(View.VISIBLE);
                 loginViewModel.login(usernameEditText.getText().toString(),
                         passwordEditText.getText().toString());
+            }
+        });
+
+        register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), SignupActivity.class);
+                startActivity(intent);
+                setResult(Activity.RESULT_OK);
+                finish();
             }
         });
     }

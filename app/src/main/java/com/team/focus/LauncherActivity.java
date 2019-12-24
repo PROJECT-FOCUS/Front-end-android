@@ -10,8 +10,6 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.team.focus.ui.login.LoginActivity;
-
 public class LauncherActivity extends AppCompatActivity {
 
     @Override

@@ -21,7 +21,7 @@ public class LoginDataSource {
 
     public Result<LoggedInUser> login(String username, String password) {
         try {
-            LoggedInUser user = Account.loginOrRegister(username, password);
+            LoggedInUser user = Account.login(username, password);
             SharedPreferenceAccessUtils.setLoginUser(context, user);
             return new Result.Success<>(user);
         } catch (Exception e) {

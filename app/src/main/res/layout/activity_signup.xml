@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".LoginActivity">
+    tools:context=".SignupActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -34,10 +34,10 @@
 
 
 
-                    <com.team.focus.ui.customfonts.EditText_SF_Pro_Display_Medium
+                    <com.team.focus.ui.customfonts.TextViewSFProDisplayMedium
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/login_banner"
+                        android:text="Create a New Account"
                         android:textSize="19.2sp"
                         android:textColor="#141a22"/>
 
@@ -45,7 +45,7 @@
                     <com.team.focus.ui.customfonts.TextViewSFProDisplayRegular
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/welcome_back"
+                        android:text="Sync across devices with your Account"
                         android:textSize="17.3dp"
                         android:layout_marginTop="4dp"
                         android:textColor="#6e7f8d"/>
@@ -60,13 +60,61 @@
             style="@style/StyledTilEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="130dp"
+            android:layout_marginTop="40dp"
             android:layout_marginLeft="28.7dp"
             android:layout_marginRight="28.7dp"
             android:textColor="@color/black">
 
             <com.team.focus.ui.customfonts.EditText_SF_Pro_Display_Medium
-                android:id="@+id/username"
+                android:id="@+id/first_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="First Name"
+                android:textAllCaps="false"
+                android:inputType="text"
+                android:maxLines="1"
+                android:paddingTop="10dp"
+                android:textColor="@color/black"
+                android:textCursorDrawable="@drawable/color_cursor"
+                android:textSize="14sp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/StyledTilEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:layout_marginLeft="28.7dp"
+            android:layout_marginRight="28.7dp"
+            android:textColor="@color/black">
+
+            <com.team.focus.ui.customfonts.EditText_SF_Pro_Display_Medium
+                android:id="@+id/last_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Last Name"
+                android:textAllCaps="false"
+                android:inputType="text"
+                android:maxLines="1"
+                android:paddingTop="10dp"
+                android:textColor="@color/black"
+                android:textCursorDrawable="@drawable/color_cursor"
+                android:textSize="14sp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/StyledTilEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:layout_marginLeft="28.7dp"
+            android:layout_marginRight="28.7dp"
+            android:textColor="@color/black">
+
+            <com.team.focus.ui.customfonts.EditText_SF_Pro_Display_Medium
+                android:id="@+id/username_register"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/prompt_email"
@@ -91,7 +139,7 @@
             android:textColor="@color/black">
 
             <com.team.focus.ui.customfonts.EditText_SF_Pro_Display_Medium
-                android:id="@+id/password"
+                android:id="@+id/password_register"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/prompt_password"
@@ -111,7 +159,7 @@
 
 
     <LinearLayout
-        android:layout_above="@+id/login"
+        android:layout_above="@+id/register"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -124,23 +172,23 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textSize="17.3sp"
-            android:text="Don’t have an account?"/>
+            android:text="Already a user?"/>
 
         <com.team.focus.ui.customfonts.TextViewSFProDisplayRegular
-            android:id="@+id/switch2Register"
+            android:id="@+id/switch2Login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textSize="17.3sp"
             android:textColor="#006dff"
             android:layout_marginLeft="5dp"
-            android:text="Signup now"/>
+            android:text="Login now"/>
 
 
     </LinearLayout>
 
     <com.team.focus.ui.customfonts.Button_SF_Pro_Display_Semibold
-        android:id="@+id/login"
+        android:id="@+id/register"
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -148,7 +196,7 @@
         android:textColor="#fbfbfb"
         android:textAllCaps="false"
         android:layout_margin="19.3dp"
-        android:text="Login"/>
+        android:text="Create Account"/>
 
 
 </RelativeLayout>
