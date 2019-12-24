@@ -12,9 +12,9 @@ public class updateTextField {
     public static void updateText(final TextView textView) {
         String text = "";
         if (textView.getId() == R.id.start_time) {
-            text += "Start time at" + SharedPreferenceAccessUtils.getTimeIntervalStart(textView.getContext());
+            text += "Start time at " + SharedPreferenceAccessUtils.getTimeIntervalStart(textView.getContext());
         } else {
-            text += "End time at" + SharedPreferenceAccessUtils.getTimeIntervalEnd(textView.getContext());
+            text += "End time at " + SharedPreferenceAccessUtils.getTimeIntervalEnd(textView.getContext());
         }
         textView.setText(text);
     }
