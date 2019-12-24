@@ -21,17 +21,13 @@ public class AccountFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_account, container, false);
 
-        final TextView textView = root.findViewById(R.id.username);
         final Switch notification = root.findViewById(R.id.switch2);
         final TextView textStart = root.findViewById(R.id.start_time);
         final TextView textEnd = root.findViewById(R.id.end_time);
         updateTextField.updateText(textStart);
         updateTextField.updateText(textEnd);
 
-        String username = SharedPreferenceAccessUtils.getUsername(root.getContext());
         notification.setChecked(SharedPreferenceAccessUtils.getNotification(root.getContext()));
-
-        textView.setText(username);
         return root;
     }
 }

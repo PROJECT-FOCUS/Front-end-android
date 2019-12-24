@@ -30,7 +30,11 @@ public class Account {
             e.printStackTrace();
             throw e;
         }
-        return user;
+
+        // test purpose without backend
+        return new LoggedInUser("111", "John Smith");
+
+//        return user;
     }
 
     public static LoggedInUser register(String username, String password, String first, String last) {
@@ -49,7 +53,10 @@ public class Account {
                 user = new LoggedInUser(username, username);
             }
         } catch (Exception e) {
-            return null;
+            // test purpose without backend
+            return new LoggedInUser("111", "John Smith");
+
+//          return null;
         }
         return user;
     }

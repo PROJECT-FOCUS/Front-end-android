@@ -5,29 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/button_logout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:onClick="bntLogout"
-        android:text="@string/button_logout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/settings" />
-
     <LinearLayout
         android:id="@+id/settings"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <Switch
             android:id="@+id/switch2"
@@ -35,25 +22,42 @@
             android:layout_height="75dp"
             android:checked="true"
             android:onClick="btnNotification"
-            android:text="push notification" />
+            android:text="push notification"
+            android:textSize="17.3sp" />
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="150dp">
-            <TextView
+            android:layout_height="150dp"
+            android:orientation="vertical">
+
+            <com.team.focus.ui.customfonts.TextViewSFProDisplayMedium
                 android:id="@+id/start_time"
                 android:layout_width="match_parent"
                 android:layout_height="75dp"
-                android:onClick="showTimePickerDialog"/>
+                android:onClick="showTimePickerDialog" />
 
-            <TextView
+            <com.team.focus.ui.customfonts.TextViewSFProDisplayMedium
                 android:id="@+id/end_time"
                 android:layout_width="match_parent"
                 android:layout_height="75dp"
-                android:onClick="showTimePickerDialog"/>
+                android:onClick="showTimePickerDialog" />
         </LinearLayout>
 
     </LinearLayout>
+
+    <com.team.focus.ui.customfonts.Button_Roboto_Medium
+        android:id="@+id/button_logout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="19.3dp"
+        android:layout_marginTop="150dp"
+        android:background="@drawable/black_rect"
+        android:onClick="bntLogout"
+        android:text="Log out"
+        android:textAllCaps="false"
+        android:textColor="#fbfbfb"
+        app:layout_constraintTop_toBottomOf="@+id/settings"
+        tools:layout_editor_absoluteX="8dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
