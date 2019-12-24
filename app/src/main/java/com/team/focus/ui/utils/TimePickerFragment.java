@@ -3,10 +3,12 @@ package com.team.focus.ui.utils;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import androidx.fragment.app.DialogFragment;
 
@@ -37,9 +39,26 @@ public class TimePickerFragment extends DialogFragment
 
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
         if (isStartTime) {
-            SharedPreferenceAccessUtils.updateTimeIntervalStart(parentContext, hourOfDay);
+            int endTime = SharedPreferenceAccessUtils.getTimeIntervalEnd(parentContext);
+            if (endTime >= hourOfDay) {
+                SharedPreferenceAccessUtils.updateTimeIntervalStart(parentContext, hourOfDay);
+                Toast.makeText(parentContext, "Start time changed to " + hourOfDay,
+                        Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(parentContext, "Start time must be earlier than end",
+                        Toast.LENGTH_SHORT).show();
+            }
         } else {
-            SharedPreferenceAccessUtils.updateTimeIntervalEnd(parentContext, hourOfDay);
+            int startTime = SharedPreferenceAccessUtils.getTimeIntervalStart(parentContext);
+            hourOfDay = hourOfDay == 0 ? 24 : hourOfDay;
+            if (startTime <= hourOfDay) {
+                SharedPreferenceAccessUtils.updateTimeIntervalEnd(parentContext, hourOfDay);
+                Toast.makeText(parentContext, "End time changed to " + hourOfDay,
+                        Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(parentContext, "End time must be later than start",
+                        Toast.LENGTH_SHORT).show();
+            }
         }
     }
 }

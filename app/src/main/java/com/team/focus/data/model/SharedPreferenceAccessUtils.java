@@ -82,7 +82,8 @@ public class SharedPreferenceAccessUtils {
     }
 
     public static int getTimeIntervalEnd(Context context) {
-        return context.getSharedPreferences("FOCUS", Context.MODE_PRIVATE)
-                .getInt("endHour", 0);
+        int endTime = context.getSharedPreferences("FOCUS", Context.MODE_PRIVATE)
+                .getInt("endHour", 24);
+        return endTime == 0 ? 24 : endTime;
     }
 }
