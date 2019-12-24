@@ -11,7 +11,7 @@ public class Account {
     }
 
     private static LoggedInUser register(String username, String password) {
-        return new LoggedInUser("111", "Test");
+        return new LoggedInUser(username, username);
     }
 
     public static LoggedInUser loginOrRegister(String username, String password) {

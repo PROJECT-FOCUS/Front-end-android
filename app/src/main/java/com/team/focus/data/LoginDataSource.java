@@ -1,11 +1,10 @@
 package com.team.focus.data;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 
 import com.team.focus.data.model.LoggedInUser;
+import com.team.focus.data.model.SharedPreferenceAccessUtils;
 import com.team.focus.data.pipeline.Account;
-import com.team.focus.ui.login.LoginActivity;
 
 import java.io.IOException;
 
