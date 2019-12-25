@@ -22,10 +22,12 @@ public class TimePickerFragment extends DialogFragment
 
     private Context parentContext;
     private boolean isStartTime;
+    private TextView view;
 
-    public TimePickerFragment(Context context, boolean isStartTime) {
+    public TimePickerFragment(Context context, boolean isStartTime, TextView view) {
         parentContext = context;
         this.isStartTime = isStartTime;
+        this.view = view;
     }
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -42,6 +44,7 @@ public class TimePickerFragment extends DialogFragment
             int endTime = SharedPreferenceAccessUtils.getTimeIntervalEnd(parentContext);
             if (endTime >= hourOfDay) {
                 SharedPreferenceAccessUtils.updateTimeIntervalStart(parentContext, hourOfDay);
+                updateTextField.updateText(this.view);
                 Toast.makeText(parentContext, "Start time changed to " + hourOfDay,
                         Toast.LENGTH_SHORT).show();
             } else {
@@ -53,6 +56,7 @@ public class TimePickerFragment extends DialogFragment
             hourOfDay = hourOfDay == 0 ? 24 : hourOfDay;
             if (startTime <= hourOfDay) {
                 SharedPreferenceAccessUtils.updateTimeIntervalEnd(parentContext, hourOfDay);
+                updateTextField.updateText(this.view);
                 Toast.makeText(parentContext, "End time changed to " + hourOfDay,
                         Toast.LENGTH_SHORT).show();
             } else {

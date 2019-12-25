@@ -57,11 +57,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void showTimePickerDialog(View v) {
         DialogFragment newFragment = new TimePickerFragment(v.getContext(),
-                v.getId() == R.id.start_time);
+                v.getId() == R.id.start_time, (TextView) v);
         newFragment.show(getSupportFragmentManager(), "timePicker");
-
-        final TextView textView = (TextView) findViewById(v.getId());
-        updateTextField.updateText(textView);
     }
 
 }

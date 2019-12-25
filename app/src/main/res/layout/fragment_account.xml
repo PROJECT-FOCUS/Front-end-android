@@ -18,11 +18,13 @@
 
         <Switch
             android:id="@+id/switch2"
+            android:background="@drawable/settings_background"
             android:layout_width="match_parent"
             android:layout_height="75dp"
             android:checked="true"
             android:onClick="btnNotification"
-            android:text="push notification"
+            android:text="  push notification"
+            android:textColor="@color/black"
             android:textSize="17.3sp" />
 
         <LinearLayout
@@ -30,17 +32,56 @@
             android:layout_height="150dp"
             android:orientation="vertical">
 
-            <com.team.focus.ui.customfonts.TextViewSFProDisplayMedium
-                android:id="@+id/start_time"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="75dp"
-                android:onClick="showTimePickerDialog" />
+                android:background="@drawable/settings_background"
+                android:orientation="horizontal">
 
-            <com.team.focus.ui.customfonts.TextViewSFProDisplayMedium
-                android:id="@+id/end_time"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:checked="true"
+                    android:gravity="center"
+                    android:text="  Active hours start time"
+                    android:textColor="@color/black"
+                    android:textSize="17.3sp" />
+
+                <com.team.focus.ui.customfonts.TextViewSFProDisplayMedium
+                    android:id="@+id/start_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center|end"
+                    android:onClick="showTimePickerDialog"
+                    android:textColor="@color/black"
+                    android:textSize="17.3sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="75dp"
-                android:onClick="showTimePickerDialog" />
+                android:background="@drawable/settings_background"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:checked="true"
+                    android:text="  Active hours end time"
+                    android:gravity="center"
+                    android:textColor="@color/black"
+                    android:textSize="17.3sp" />
+
+                <com.team.focus.ui.customfonts.TextViewSFProDisplayMedium
+                    android:id="@+id/end_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center|end"
+                    android:onClick="showTimePickerDialog"
+                    android:textColor="@color/black"
+                    android:textSize="17.3sp" />
+            </LinearLayout>
         </LinearLayout>
 
     </LinearLayout>
