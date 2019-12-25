@@ -39,6 +39,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
+     * settings button/switch onClickerListener group
+     */
+
+    /**
      * log out button onClickListener
      * @param view
      */
@@ -49,12 +53,20 @@ public class MainActivity extends AppCompatActivity {
         finish();
     }
 
+    /**
+     * push notification button toggle
+     * @param view
+     */
     public void btnNotification(View view) {
         boolean prev = SharedPreferenceAccessUtils.updateNotification(view.getContext());
         String toast = prev ? "Turn off notification" : "Turn on notification";
         Toast.makeText(view.getContext(), toast, Toast.LENGTH_SHORT).show();
     }
 
+    /**
+     * select active hours
+     * @param v
+     */
     public void showTimePickerDialog(View v) {
         DialogFragment newFragment = new TimePickerFragment(v.getContext(),
                 v.getId() == R.id.start_time, (TextView) v);
