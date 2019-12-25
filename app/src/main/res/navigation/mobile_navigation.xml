@@ -9,17 +9,17 @@
         android:id="@+id/navigation_overview"
         android:name="com.team.focus.ui.overview.OverviewFragment"
         android:label="@string/title_overview"
-        tools:layout="@layout/fragment_settings" />
-
-    <fragment
-        android:id="@+id/navigation_recommendation"
-        android:name="com.team.focus.ui.settings.SettingsFragment"
-        android:label="@string/title_recommendation"
         tools:layout="@layout/fragment_overview" />
 
     <fragment
-        android:id="@+id/navigation_Settings"
+        android:id="@+id/navigation_recommendation"
         android:name="com.team.focus.ui.recommendation.RecommendationFragment"
-        android:label="@string/title_settings"
+        android:label="@string/title_recommendation"
         tools:layout="@layout/fragment_recommendation" />
+
+    <fragment
+        android:id="@+id/navigation_account"
+        android:name="com.team.focus.ui.account.AccountFragment"
+        android:label="@string/title_account"
+        tools:layout="@layout/fragment_account" />
 </navigation>

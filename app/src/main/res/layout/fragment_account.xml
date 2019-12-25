@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/settings"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <Switch
+            android:id="@+id/switch2"
+            android:background="@drawable/settings_group_background"
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:checked="true"
+            android:onClick="btnNotification"
+            android:text="  push notification"
+            android:textColor="@color/black"
+            android:textSize="17.3sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/settings_group_background"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="75dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:checked="true"
+                    android:gravity="center"
+                    android:text="  Active hours start time"
+                    android:textColor="@color/black"
+                    android:textSize="17.3sp" />
+
+                <com.team.focus.ui.customfonts.TextViewSFProDisplayMedium
+                    android:id="@+id/start_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center|end"
+                    android:onClick="showTimePickerDialog"
+                    android:textColor="@color/black"
+                    android:textSize="17.3sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="75dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:checked="true"
+                    android:gravity="center"
+                    android:text="  Active hours end time"
+                    android:textColor="@color/black"
+                    android:textSize="17.3sp" />
+
+                <com.team.focus.ui.customfonts.TextViewSFProDisplayMedium
+                    android:id="@+id/end_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center|end"
+                    android:onClick="showTimePickerDialog"
+                    android:textColor="@color/black"
+                    android:textSize="17.3sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <com.team.focus.ui.customfonts.Button_Roboto_Medium
+        android:id="@+id/button_logout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="19.3dp"
+        android:layout_marginTop="150dp"
+        android:background="@drawable/black_rect"
+        android:onClick="bntLogout"
+        android:text="Log out"
+        android:textAllCaps="false"
+        android:textColor="#fbfbfb"
+        app:layout_constraintTop_toBottomOf="@+id/settings"
+        tools:layout_editor_absoluteX="8dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
