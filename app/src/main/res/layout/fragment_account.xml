@@ -19,14 +19,16 @@
 
         <Switch
             android:id="@+id/switch2"
-            android:background="@drawable/settings_group_background"
+            style="@style/SCBSwitch"
             android:layout_width="match_parent"
             android:layout_height="75dp"
+            android:background="@drawable/settings_group_background"
             android:checked="true"
             android:onClick="btnNotification"
             android:text="  push notification"
             android:textColor="@color/black"
-            android:textSize="17.3sp" />
+            android:textSize="17.3sp"
+            android:theme="@style/SCBSwitch" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -43,7 +45,8 @@
                 android:onClick="btnNotification"
                 android:text="  Active hours mode"
                 android:textColor="@color/black"
-                android:textSize="17.3sp" />
+                android:textSize="17.3sp"
+                android:theme="@style/SCBSwitch" />
 
             <LinearLayout
                 android:id="@+id/start_time_bar"

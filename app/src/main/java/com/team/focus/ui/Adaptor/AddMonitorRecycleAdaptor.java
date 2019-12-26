@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -82,6 +83,8 @@ public class AddMonitorRecycleAdaptor extends RecyclerView.Adapter<AddMonitorRec
                         expectedUsage, actualUsage);
 
                 Intent intent = new Intent(context, MainActivity.class);
+                Toast.makeText(context, "App " + item.getAppName()
+                        + "has successfully add to monitor list", Toast.LENGTH_SHORT);
                 context.startActivity(intent);
                 Activity parent = (Activity)context;
                 parent.finish();

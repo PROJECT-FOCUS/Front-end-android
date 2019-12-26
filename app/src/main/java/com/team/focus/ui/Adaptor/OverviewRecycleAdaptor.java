@@ -8,11 +8,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.team.focus.R;
 import com.team.focus.data.model.OverviewItem;
 import com.team.focus.data.model.Usage;
+import com.team.focus.ui.overview.AppMonitorFragment;
 
 import java.util.List;
 
@@ -61,7 +63,7 @@ public class OverviewRecycleAdaptor extends RecyclerView.Adapter<OverviewRecycle
 
     @Override
     public void onBindViewHolder(@NonNull OverviewRecycleAdaptor.MyViewHolder holder, int position) {
-        OverviewItem item = items.get(position);
+        final OverviewItem item = items.get(position);
         holder.appName.setText(item.getAppName());
         holder.packageName.setText(item.getPackageName());
         holder.usagePercentage.setText(item.getUsagePercentage() + "%");
@@ -74,6 +76,16 @@ public class OverviewRecycleAdaptor extends RecyclerView.Adapter<OverviewRecycle
         if (actual.compareTo(expect) > 0) {
             holder.actualUsage.setTextColor(context.getResources().getColor(R.color.colorAccent));
         }
+
+        holder.itemView.setClickable(true);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AppCompatActivity activity = (AppCompatActivity) v.getContext();
+                AppMonitorFragment itemOp = new AppMonitorFragment(item, activity);
+                itemOp.show(activity.getSupportFragmentManager(), "popup");
+            }
+        });
     }
 
     @Override
