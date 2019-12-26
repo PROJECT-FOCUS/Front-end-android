@@ -72,5 +72,4 @@ public class MainActivity extends AppCompatActivity {
                 v.getId() == R.id.start_time, (TextView) v);
         newFragment.show(getSupportFragmentManager(), "timePicker");
     }
-
 }

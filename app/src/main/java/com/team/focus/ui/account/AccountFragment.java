@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -22,12 +23,38 @@ public class AccountFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_account, container, false);
 
         final Switch notification = root.findViewById(R.id.switch2);
+        final Switch isActiveModeSwitch = root.findViewById(R.id.switch_active_mode);
         final TextView textStart = root.findViewById(R.id.start_time);
         final TextView textEnd = root.findViewById(R.id.end_time);
+
+        boolean isActiveMode = SharedPreferenceAccessUtils.getIsActiveMode(root.getContext());
+
         updateTextField.updateText(textStart);
         updateTextField.updateText(textEnd);
 
         notification.setChecked(SharedPreferenceAccessUtils.getNotification(root.getContext()));
+        isActiveModeSwitch.setChecked(isActiveMode);
+
+        if (!isActiveMode) {
+            textEnd.setTextColor(root.getResources().getColor(R.color.light_gray));
+            textEnd.setClickable(false);
+        }
+
+        isActiveModeSwitch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean prev = SharedPreferenceAccessUtils.updateIsActiveMode(v.getContext());
+                if (prev) {
+                    textEnd.setTextColor(v.getResources().getColor(R.color.light_gray));
+                    textEnd.setClickable(false);
+                    Toast.makeText(v.getContext(), "Switch to one-day mode", Toast.LENGTH_SHORT).show();
+                } else {
+                    textEnd.setTextColor(v.getResources().getColor(R.color.black));
+                    textEnd.setClickable(true);
+                    Toast.makeText(v.getContext(), "Switch to active hours mode", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
         return root;
     }
 }

@@ -5,6 +5,10 @@ import android.content.SharedPreferences;
 
 import com.team.focus.data.model.LoggedInUser;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 public class SharedPreferenceAccessUtils {
     /**
      * Local database utils functions
@@ -85,5 +89,25 @@ public class SharedPreferenceAccessUtils {
         int endTime = context.getSharedPreferences("FOCUS", Context.MODE_PRIVATE)
                 .getInt("endHour", 24);
         return endTime == 0 ? 24 : endTime;
+    }
+
+    public static boolean getIsActiveMode(Context context) {
+        return context.getSharedPreferences("FOCUS", Context.MODE_PRIVATE)
+                .getBoolean("isActiveMode", true);
+    }
+
+    public static boolean updateIsActiveMode(Context context) {
+        SharedPreferences preferences = context.getSharedPreferences("FOCUS",
+                Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        boolean prevPreference = preferences.getBoolean("isActiveMode", true);
+        editor.putBoolean("isActiveMode", !prevPreference);
+        editor.commit();
+        return prevPreference;
+    }
+
+    public static Set<String> getMonitoredApps(Context context) {
+        SharedPreferences preferences = context.getSharedPreferences("FOCUS", Context.MODE_PRIVATE);
+        return preferences.getStringSet("savedMonitoredApps", new HashSet<String>());
     }
 }

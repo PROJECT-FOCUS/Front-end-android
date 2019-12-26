@@ -30,10 +30,20 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="225dp"
             android:layout_marginTop="10dp"
             android:background="@drawable/settings_group_background"
             android:orientation="vertical">
+
+            <Switch
+                android:id="@+id/switch_active_mode"
+                android:layout_width="match_parent"
+                android:layout_height="75dp"
+                android:checked="true"
+                android:onClick="btnNotification"
+                android:text="  Active hours mode"
+                android:textColor="@color/black"
+                android:textSize="17.3sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -45,7 +55,7 @@
                     android:layout_height="match_parent"
                     android:checked="true"
                     android:gravity="center"
-                    android:text="  Active hours start time"
+                    android:text="  Monitor start time"
                     android:textColor="@color/black"
                     android:textSize="17.3sp" />
 
@@ -70,7 +80,7 @@
                     android:layout_height="match_parent"
                     android:checked="true"
                     android:gravity="center"
-                    android:text="  Active hours end time"
+                    android:text="  Monitor end time"
                     android:textColor="@color/black"
                     android:textSize="17.3sp" />
 

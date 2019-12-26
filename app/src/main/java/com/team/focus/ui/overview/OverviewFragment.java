@@ -59,10 +59,17 @@ public class OverviewFragment extends Fragment {
 
         int startTime = SharedPreferenceAccessUtils.getTimeIntervalStart(root.getContext());
         int endTime = SharedPreferenceAccessUtils.getTimeIntervalEnd(root.getContext());
-        int interval = endTime - startTime;
-        String textActive = "Active from " + startTime + " to " + endTime;
+        Integer interval = null;
+        boolean isActiveMode = SharedPreferenceAccessUtils.getIsActiveMode(root.getContext());
+        String textActive = null;
+        if (isActiveMode) {
+            textActive = "Monitor from " + startTime + " to " + endTime + " today";
+            interval = endTime - startTime;
+        } else {
+            textActive = "Monitor from " + startTime + " to " + startTime + " next day";
+            interval = 24;
+        }
         String textInterval = interval + " hours in total";
-
         textViewActive.setText(textActive);
         textViewInterval.setText(textInterval);
 
