@@ -1,5 +1,7 @@
 package com.team.focus.data;
 
+import android.content.Context;
+
 import com.team.focus.data.model.LoggedInUser;
 
 /**
@@ -15,6 +17,10 @@ public class LoginRepository {
     // If user credentials will be cached in local storage, it is recommended it be encrypted
     // @see https://developer.android.com/training/articles/keystore
     private LoggedInUser user = null;
+
+    public void setContext(Context context) {
+        dataSource.setContext(context);
+    }
 
     // private constructor : singleton access
     private LoginRepository(LoginDataSource dataSource) {

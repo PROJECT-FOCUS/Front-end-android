@@ -1,6 +1,10 @@
 package com.team.focus.data;
 
+import android.content.Context;
+
 import com.team.focus.data.model.LoggedInUser;
+import com.team.focus.data.model.SharedPreferenceAccessUtils;
+import com.team.focus.data.pipeline.Account;
 
 import java.io.IOException;
 
@@ -9,21 +13,23 @@ import java.io.IOException;
  */
 public class LoginDataSource {
 
-    public Result<LoggedInUser> login(String username, String password) {
+    private Context context;
 
+    public void setContext(Context context) {
+        this.context = context;
+    }
+
+    public Result<LoggedInUser> login(String username, String password) {
         try {
-            // TODO: handle loggedInUser authentication
-            LoggedInUser fakeUser =
-                    new LoggedInUser(
-                            java.util.UUID.randomUUID().toString(),
-                            "Jane Doe");
-            return new Result.Success<>(fakeUser);
+            LoggedInUser user = Account.login(username, password);
+            SharedPreferenceAccessUtils.setLoginUser(context, user);
+            return new Result.Success<>(user);
         } catch (Exception e) {
             return new Result.Error(new IOException("Error logging in", e));
         }
     }
 
     public void logout() {
-        // TODO: revoke authentication
+        SharedPreferenceAccessUtils.removeLoginUser(context);
     }
 }
