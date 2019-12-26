@@ -1,6 +1,12 @@
 package com.team.focus.data.model;
 
+import android.content.Context;
 import android.graphics.drawable.Drawable;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class OverviewItem {
 
@@ -16,6 +22,26 @@ public class OverviewItem {
         this.expectedUsage = expectedUsage;
         this.actualUsage = actualUsage;
         this.icon = icon;
+    }
+
+    public static class OverviewItemUtils {
+
+        public static ArrayList<OverviewItem> getOverviewItemList(Context context) {
+            Set<String> packageNames = SharedPreferenceAccessUtils.getMonitoredApps(context);
+            List<AppInfo> apps = InstalledApps.getMonitorAppInfo(packageNames, context);
+            Map<String, Usage> expected = SharedPreferenceAccessUtils.getExpectedUsage(context, packageNames);
+            Map<String, Usage> actual = SharedPreferenceAccessUtils.getActualUsage(context, packageNames);
+
+            ArrayList<OverviewItem> list = new ArrayList<>();
+
+            for (AppInfo app : apps) {
+                list.add(new OverviewItem(app.getAppName(), app.getPackageName(),
+                        expected.get(app.getPackageName()), actual.get(app.getPackageName()),
+                        app.getIcon()));
+            }
+
+            return list;
+        }
     }
 
     public String getAppName() {

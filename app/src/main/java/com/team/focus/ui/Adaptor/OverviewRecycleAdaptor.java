@@ -21,7 +21,7 @@ public class OverviewRecycleAdaptor extends RecyclerView.Adapter<OverviewRecycle
     private Context context;
     private List<OverviewItem> items;
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
 
         TextView appName, packageName, expectedUsage, actualUsage, usagePercentage;
@@ -37,6 +37,10 @@ public class OverviewRecycleAdaptor extends RecyclerView.Adapter<OverviewRecycle
             actualUsage = view.findViewById(R.id.actual_usage);
             usagePercentage = view.findViewById(R.id.percentage);
             appIcon = view.findViewById(R.id.icon);
+        }
+
+        @Override
+        public void onClick(View v) {
         }
 
     }

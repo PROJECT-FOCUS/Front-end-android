@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
@@ -8,28 +9,28 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:background="@drawable/white_rect"
         android:layout_marginLeft="19.3dp"
-        android:layout_marginRight="19.3dp"
         android:layout_marginTop="10dp"
+        android:layout_marginRight="19.3dp"
         android:layout_marginBottom="9dp"
+        android:background="@drawable/white_rect"
+        android:orientation="horizontal"
         android:padding="19.2dp">
 
 
         <LinearLayout
-            android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:orientation="vertical">
 
             <com.team.focus.ui.customfonts.TextViewSFProDisplayRegular
                 android:id="@+id/appName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="AppName"
                 android:textColor="@color/txt_color"
-                android:textSize="17.3sp"
-                android:text="AppName"/>
+                android:textSize="17.3sp" />
 
 
             <LinearLayout
@@ -48,11 +49,11 @@
                     android:id="@+id/packageName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="package name"
+                    android:layout_gravity="center"
                     android:layout_marginLeft="5dp"
-                    android:textSize="10sp"
+                    android:text="package name"
                     android:textColor="#6e7f8d"
-                    android:layout_gravity="center"/>
+                    android:textSize="10sp" />
             </LinearLayout>
         </LinearLayout>
 
@@ -71,13 +72,12 @@
                     android:id="@+id/percentage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Usage percentage"
-                    android:gravity="center"
                     android:layout_gravity="center"
                     android:layout_marginEnd="20dp"
-                    android:textSize="10sp"
-                    android:textColor="#17b978"/>
-
+                    android:gravity="center"
+                    android:text="Usage percentage"
+                    android:textColor="#17b978"
+                    android:textSize="10sp" />
 
 
                 <com.team.focus.ui.customfonts.TextViewSFProDisplayRegular
@@ -85,9 +85,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
+                    android:text="hour:min"
                     android:textColor="@color/txt_color"
-                    android:textSize="17.3sp"
-                    android:text="hour:min"/>
+                    android:textSize="17.3sp" />
             </LinearLayout>
 
 
@@ -99,9 +99,16 @@
                 android:layout_marginTop="8dp"
                 android:gravity="right"
                 android:text="hour:min"
-                android:textSize="17.3sp"
-                android:textColor="@color/light_gray"/>
+                android:textColor="@color/light_gray"
+                android:textSize="17.3sp" />
+
         </LinearLayout>
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            app:srcCompat="@drawable/ic_keyboard_arrow_right_black_24dp" />
 
 
     </LinearLayout>

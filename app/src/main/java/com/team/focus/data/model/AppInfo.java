@@ -2,7 +2,9 @@ package com.team.focus.data.model;
 
 import android.graphics.drawable.Drawable;
 
-public class AppInfo {
+import androidx.annotation.Nullable;
+
+public class AppInfo implements Comparable<AppInfo> {
 
     private String appName;
     private String packageName;
@@ -37,5 +39,19 @@ public class AppInfo {
 
     public void setIcon(Drawable icon) {
         this.icon = icon;
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        if (!(obj instanceof AppInfo)) {
+            return false;
+        }
+        AppInfo a = (AppInfo) obj;
+        return this.packageName.equals(a.packageName);
+    }
+
+    @Override
+    public int compareTo(AppInfo o) {
+        return this.appName.compareTo(o.appName);
     }
 }

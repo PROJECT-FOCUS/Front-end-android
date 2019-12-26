@@ -46,6 +46,8 @@
                 android:textSize="17.3sp" />
 
             <LinearLayout
+                android:id="@+id/start_time_bar"
+                android:onClick="showTimePickerDialog"
                 android:layout_width="match_parent"
                 android:layout_height="75dp"
                 android:orientation="horizontal">
@@ -61,16 +63,24 @@
 
                 <com.team.focus.ui.customfonts.TextViewSFProDisplayMedium
                     android:id="@+id/start_time"
-                    android:layout_width="match_parent"
+                    android:layout_width="219dp"
                     android:layout_height="match_parent"
                     android:gravity="center|end"
-                    android:onClick="showTimePickerDialog"
                     android:textColor="@color/black"
                     android:textSize="17.3sp" />
+
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="38dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/ic_keyboard_arrow_right_black_24dp" />
 
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/end_time_bar"
+                android:onClick="showTimePickerDialog"
                 android:layout_width="match_parent"
                 android:layout_height="75dp"
                 android:orientation="horizontal">
@@ -86,12 +96,18 @@
 
                 <com.team.focus.ui.customfonts.TextViewSFProDisplayMedium
                     android:id="@+id/end_time"
-                    android:layout_width="match_parent"
+                    android:layout_width="227dp"
                     android:layout_height="match_parent"
                     android:gravity="center|end"
-                    android:onClick="showTimePickerDialog"
                     android:textColor="@color/black"
                     android:textSize="17.3sp" />
+
+                <ImageView
+                    android:id="@+id/imageView3"
+                    android:layout_width="38dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/ic_keyboard_arrow_right_black_24dp" />
             </LinearLayout>
         </LinearLayout>
 

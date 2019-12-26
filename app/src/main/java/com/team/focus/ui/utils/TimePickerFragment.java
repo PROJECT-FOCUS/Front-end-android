@@ -3,19 +3,14 @@ package com.team.focus.ui.utils;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.text.format.DateFormat;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.fragment.app.DialogFragment;
 
-import com.team.focus.R;
 import com.team.focus.data.model.SharedPreferenceAccessUtils;
-
-import java.util.Calendar;
 
 public class TimePickerFragment extends DialogFragment
         implements TimePickerDialog.OnTimeSetListener {
@@ -44,7 +39,7 @@ public class TimePickerFragment extends DialogFragment
             int endTime = SharedPreferenceAccessUtils.getTimeIntervalEnd(parentContext);
             if (endTime >= hourOfDay) {
                 SharedPreferenceAccessUtils.updateTimeIntervalStart(parentContext, hourOfDay);
-                updateTextField.updateText(this.view);
+                UpdateTextField.updateText(this.view);
                 Toast.makeText(parentContext, "Start time changed to " + hourOfDay,
                         Toast.LENGTH_SHORT).show();
             } else {
@@ -56,7 +51,7 @@ public class TimePickerFragment extends DialogFragment
             hourOfDay = hourOfDay == 0 ? 24 : hourOfDay;
             if (startTime <= hourOfDay) {
                 SharedPreferenceAccessUtils.updateTimeIntervalEnd(parentContext, hourOfDay);
-                updateTextField.updateText(this.view);
+                UpdateTextField.updateText(this.view);
                 Toast.makeText(parentContext, "End time changed to " + hourOfDay,
                         Toast.LENGTH_SHORT).show();
             } else {

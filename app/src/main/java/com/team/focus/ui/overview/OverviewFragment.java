@@ -1,5 +1,6 @@
 package com.team.focus.ui.overview;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.team.focus.AddMonitorAppActivity;
 import com.team.focus.R;
 import com.team.focus.data.model.OverviewItem;
 import com.team.focus.data.model.SharedPreferenceAccessUtils;
@@ -28,7 +30,7 @@ public class OverviewFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_overview, container, false);
+        final View root = inflater.inflate(R.layout.fragment_overview, container, false);
 
         recyclerView = root.findViewById(R.id.recyclerView);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(root.getContext());
@@ -42,6 +44,7 @@ public class OverviewFragment extends Fragment {
 
         // testing purpose
         // ToDo: build real data pipeline either from local (use SharedPreference) or from server
+        items = OverviewItem.OverviewItemUtils.getOverviewItemList(root.getContext());
 //        items = new ArrayList<>(Arrays.asList(new OverviewItem("Youtube",
 //                "com.google.youtube", new Usage(1, 0), new Usage(2, 0)),
 //                new OverviewItem("Wechat",
@@ -71,7 +74,8 @@ public class OverviewFragment extends Fragment {
         addMonitor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // ToDO : start add monitor object(s)
+                Intent intent = new Intent(v.getContext(), AddMonitorAppActivity.class);
+                v.getContext().startActivity(intent);
             }
         });
 

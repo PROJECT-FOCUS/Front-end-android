@@ -96,14 +96,14 @@ public class SharedPreferenceAccessUtils {
                 .getBoolean("isActiveMode", true);
     }
 
-    public static boolean updateIsActiveMode(Context context) {
+    public static boolean updateIsActiveMode(Context context, boolean activeMode) {
         SharedPreferences preferences = context.getSharedPreferences("FOCUS",
                 Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         boolean prevPreference = preferences.getBoolean("isActiveMode", true);
-        editor.putBoolean("isActiveMode", !prevPreference);
+        editor.putBoolean("isActiveMode", activeMode);
         editor.commit();
-        return prevPreference;
+        return !activeMode;
     }
 
     /**
@@ -125,6 +125,10 @@ public class SharedPreferenceAccessUtils {
         SharedPreferences preferences = context.getSharedPreferences("FOCUS",
                 Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
+        SharedPreferences.Editor pExpected = context.getSharedPreferences("FOCUS.Expected",
+                Context.MODE_PRIVATE).edit();
+        SharedPreferences.Editor pActual = context.getSharedPreferences("FOCUS.Actual",
+                Context.MODE_PRIVATE).edit();
         Set<String> prev = preferences.getStringSet("savedMonitoredApps", new HashSet<String>());
         Iterator<String> iterator = prev.iterator();
 
@@ -133,9 +137,13 @@ public class SharedPreferenceAccessUtils {
             if (toDeletePackageNames.contains(curr)) {
                 iterator.remove();
             }
+            pExpected.putInt(curr, -1);
+            pActual.putInt(curr, -1);
         }
         editor.putStringSet("savedMonitoredApps", prev);
         editor.commit();
+        pExpected.commit();
+        pActual.commit();
     }
 
     public static void addMonitoredApps(Context context, Set<String> toAddPackageNames,
@@ -182,7 +190,7 @@ public class SharedPreferenceAccessUtils {
         SharedPreferences preferences = context.getSharedPreferences("FOCUS.Expected", Context.MODE_PRIVATE);
         for (String packageName : packageNames) {
             int minute = preferences.getInt(packageName, -1);
-            if (minute > 0) {
+            if (minute >= 0) {
                 expectedUsage.put(packageName, new Usage(minute));
             }
         }
@@ -194,7 +202,7 @@ public class SharedPreferenceAccessUtils {
         SharedPreferences preferences = context.getSharedPreferences("FOCUS.Actual", Context.MODE_PRIVATE);
         for (String packageName : packageNames) {
             int minute = preferences.getInt(packageName, -1);
-            if (minute > 0) {
+            if (minute >= 0) {
                 actualUsage.put(packageName, new Usage(minute));
             }
         }
