@@ -138,14 +138,37 @@ public class SharedPreferenceAccessUtils {
         editor.commit();
     }
 
-    public static void addMonitoredApps(Context context, Set<String> toAddPackageNames) {
-        SharedPreferences preferences = context.getSharedPreferences("FOCUS",
+    public static void addMonitoredApps(Context context, Set<String> toAddPackageNames,
+                                        Map<String, Usage> expectedUsage,
+                                        Map<String, Usage> actualUsage) {
+
+        SharedPreferences pFocus = context.getSharedPreferences("FOCUS",
                 Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        Set<String> prev = preferences.getStringSet("savedMonitoredApps", new HashSet<String>());
+        SharedPreferences pExpected = context.getSharedPreferences("FOCUS.Expected",
+                Context.MODE_PRIVATE);
+        SharedPreferences pActual = context.getSharedPreferences("FOCUS.Actual",
+                Context.MODE_PRIVATE);
+
+        SharedPreferences.Editor editorExpected = pExpected.edit();
+        SharedPreferences.Editor editorActual = pActual.edit();
+        SharedPreferences.Editor editorFocus = pFocus.edit();
+
+        for (String packageName : toAddPackageNames) {
+            if (expectedUsage.containsKey(packageName)) {
+                editorExpected.putInt(packageName, expectedUsage.get(packageName).toMinute());
+            }
+
+            if (actualUsage.containsKey(packageName)) {
+                editorActual.putInt(packageName, actualUsage.get(packageName).toMinute());
+            }
+        }
+
+        Set<String> prev = pFocus.getStringSet("savedMonitoredApps", new HashSet<String>());
         prev.addAll(toAddPackageNames);
-        editor.putStringSet("savedMonitoredApps", prev);
-        editor.commit();
+        editorFocus.putStringSet("savedMonitoredApps", prev);
+        editorFocus.commit();
+        editorActual.commit();
+        editorExpected.commit();
     }
 
     /**

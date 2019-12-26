@@ -32,6 +32,10 @@ public class Usage implements Comparable<Usage> {
         this.minute = minute;
     }
 
+    public int toMinute() {
+        return this.hour * 60 + this.minute;
+    }
+
     @NonNull
     @Override
     public String toString() {
