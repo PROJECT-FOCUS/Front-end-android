@@ -2,8 +2,6 @@ package com.team.focus.data.model;
 
 import androidx.annotation.NonNull;
 
-import java.util.Comparator;
-
 public class Usage implements Comparable<Usage> {
     private int hour;
     private int minute;
@@ -11,6 +9,11 @@ public class Usage implements Comparable<Usage> {
     public Usage(int hour, int minute) {
         this.hour = hour;
         this.minute = minute;
+    }
+
+    public Usage(int minute) {
+        this.hour = minute % 60;
+        this.minute = minute / 60;
     }
 
     public int getHour() {

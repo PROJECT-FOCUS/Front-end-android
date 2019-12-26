@@ -1,6 +1,6 @@
 package com.team.focus.data.model;
 
-import java.util.Date;
+import android.graphics.drawable.Drawable;
 
 public class OverviewItem {
 
@@ -8,14 +8,14 @@ public class OverviewItem {
     private String packageName;
     private Usage expectedUsage;
     private Usage actualUsage;
+    private Drawable icon;
 
-    // ToDo: add app icon image if possible
-
-    public OverviewItem(String appName, String packageName, Usage expectedUsage, Usage actualUsage) {
+    public OverviewItem(String appName, String packageName, Usage expectedUsage, Usage actualUsage, Drawable icon) {
         this.appName = appName;
         this.packageName = packageName;
         this.expectedUsage = expectedUsage;
         this.actualUsage = actualUsage;
+        this.icon = icon;
     }
 
     public String getAppName() {
@@ -55,5 +55,13 @@ public class OverviewItem {
         float actual = actualUsage.getHour() * 60 + actualUsage.getMinute();
 
         return Math.round(actual/total*1000)/10.0;
+    }
+
+    public Drawable getIcon() {
+        return icon;
+    }
+
+    public void setIcon(Drawable icon) {
+        this.icon = icon;
     }
 }

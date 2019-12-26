@@ -60,11 +60,12 @@ public class OverviewRecycleAdaptor extends RecyclerView.Adapter<OverviewRecycle
         OverviewItem item = items.get(position);
         holder.appName.setText(item.getAppName());
         holder.packageName.setText(item.getPackageName());
-        holder.usagePercentage.setText(String.valueOf(item.getUsagePercentage() + "%"));
+        holder.usagePercentage.setText(item.getUsagePercentage() + "%");
         Usage expect = item.getExpectedUsage();
         Usage actual = item.getActualUsage();
         holder.expectedUsage.setText("Expected  " + expect.toString());
         holder.actualUsage.setText("Actual  " + actual.toString());
+        holder.appIcon.setImageDrawable(item.getIcon());
 
         if (actual.compareTo(expect) > 0) {
             holder.actualUsage.setTextColor(context.getResources().getColor(R.color.colorAccent));

@@ -4,28 +4,21 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.team.focus.MainActivity;
 import com.team.focus.R;
 import com.team.focus.data.model.OverviewItem;
 import com.team.focus.data.model.SharedPreferenceAccessUtils;
-import com.team.focus.data.model.Usage;
 import com.team.focus.ui.Adaptor.OverviewRecycleAdaptor;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class OverviewFragment extends Fragment {
 
@@ -49,10 +42,10 @@ public class OverviewFragment extends Fragment {
 
         // testing purpose
         // ToDo: build real data pipeline either from local (use SharedPreference) or from server
-        items = new ArrayList<>(Arrays.asList(new OverviewItem("Youtube",
-                "com.google.youtube", new Usage(1, 0), new Usage(2, 0)),
-                new OverviewItem("Wechat",
-                        "com.tecent.wechat", new Usage(2, 30), new Usage(2, 0))));
+//        items = new ArrayList<>(Arrays.asList(new OverviewItem("Youtube",
+//                "com.google.youtube", new Usage(1, 0), new Usage(2, 0)),
+//                new OverviewItem("Wechat",
+//                        "com.tecent.wechat", new Usage(2, 30), new Usage(2, 0))));
 
         adapter = new OverviewRecycleAdaptor(root.getContext(), items);
         recyclerView.setAdapter(adapter);

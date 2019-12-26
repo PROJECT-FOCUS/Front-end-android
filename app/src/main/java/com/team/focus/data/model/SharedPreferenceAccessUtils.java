@@ -3,10 +3,10 @@ package com.team.focus.data.model;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.team.focus.data.model.LoggedInUser;
-
+import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.Set;
 
 public class SharedPreferenceAccessUtils {
@@ -106,8 +106,75 @@ public class SharedPreferenceAccessUtils {
         return prevPreference;
     }
 
+    /**
+     * utils to get packageName
+     * @param context
+     * @return a set of packageNames of monitored apps
+     */
     public static Set<String> getMonitoredApps(Context context) {
         SharedPreferences preferences = context.getSharedPreferences("FOCUS", Context.MODE_PRIVATE);
         return preferences.getStringSet("savedMonitoredApps", new HashSet<String>());
+    }
+
+    /**
+     * utils to update packageName
+     * @param context
+     * @param toDeletePackageNames to delete (stop monitoring) apps
+     */
+    public static void deleteMonitoredApps(Context context, Set<String> toDeletePackageNames) {
+        SharedPreferences preferences = context.getSharedPreferences("FOCUS",
+                Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        Set<String> prev = preferences.getStringSet("savedMonitoredApps", new HashSet<String>());
+        Iterator<String> iterator = prev.iterator();
+
+        while (iterator.hasNext()) {
+            String curr = iterator.next();
+            if (toDeletePackageNames.contains(curr)) {
+                iterator.remove();
+            }
+        }
+        editor.putStringSet("savedMonitoredApps", prev);
+        editor.commit();
+    }
+
+    public static void addMonitoredApps(Context context, Set<String> toAddPackageNames) {
+        SharedPreferences preferences = context.getSharedPreferences("FOCUS",
+                Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        Set<String> prev = preferences.getStringSet("savedMonitoredApps", new HashSet<String>());
+        prev.addAll(toAddPackageNames);
+        editor.putStringSet("savedMonitoredApps", prev);
+        editor.commit();
+    }
+
+    /**
+     * utils to get minute of expected usage for passed in packageName
+     * @param context
+     * @param packageNames
+     * @return
+     */
+    public static Map<String, Usage> getExpectedUsage(Context context, Set<String> packageNames) {
+        Map<String, Usage> expectedUsage = new HashMap<>();
+        SharedPreferences preferences = context.getSharedPreferences("FOCUS.Expected", Context.MODE_PRIVATE);
+        for (String packageName : packageNames) {
+            int minute = preferences.getInt(packageName, -1);
+            if (minute > 0) {
+                expectedUsage.put(packageName, new Usage(minute));
+            }
+        }
+        return expectedUsage;
+    }
+
+    public static Map<String, Usage> getActualUsage(Context context, Set<String> packageNames) {
+        Map<String, Usage> actualUsage = new HashMap<>();
+        SharedPreferences preferences = context.getSharedPreferences("FOCUS.Actual", Context.MODE_PRIVATE);
+        for (String packageName : packageNames) {
+            int minute = preferences.getInt(packageName, -1);
+            if (minute > 0) {
+                actualUsage.put(packageName, new Usage(minute));
+            }
+        }
+        return actualUsage;
     }
 }
