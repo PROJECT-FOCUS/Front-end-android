@@ -87,15 +87,15 @@ public class AppMonitorFragment extends DialogFragment {
                 // sync cloud
                 // Todo: assign to @Xueting
 
+                Toast.makeText(context, "Expected Usage has changed from " +
+                        item.getExpectedUsage().toString() + " to " +
+                        cache.toString(), Toast.LENGTH_SHORT).show();
                 Bundle bundle = new Bundle();
                 bundle.putString("packageName", item.getPackageName());
                 bundle.putInt("expected", cache.toMinute());
                 Intent intent = new Intent().putExtras(bundle);
                 targetFragment.onActivityResult(getTargetRequestCode(),
                         getResources().getInteger(R.integer.item_changed), intent);
-                Toast.makeText(context, "Expected Usage has changed from " +
-                        item.getExpectedUsage().toString() + " to " +
-                        cache.toString(), Toast.LENGTH_SHORT).show();
                 dismiss();
             }
         });

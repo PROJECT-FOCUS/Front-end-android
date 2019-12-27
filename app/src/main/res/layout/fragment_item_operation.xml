@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white">
@@ -78,6 +79,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="19.3dp"
             android:layout_marginRight="19.3dp"
+            android:id="@+id/usage_box"
             android:background="@drawable/white_rect"
             android:orientation="vertical">
 
@@ -167,6 +169,7 @@
 
         <com.team.focus.ui.customfonts.Button_SF_Pro_Display_Semibold
             android:id="@+id/save"
+            app:layout_constraintTop_toBottomOf="@+id/usage_box"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="19.3dp"
