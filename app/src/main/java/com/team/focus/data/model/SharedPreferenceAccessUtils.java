@@ -201,4 +201,13 @@ public class SharedPreferenceAccessUtils {
         }
         return actualUsage;
     }
+
+    public static Usage updateAppExpectedUsage(Context context, String packageName, int minute) {
+        SharedPreferences preferences = context.getSharedPreferences("FOCUS.Expected", Context.MODE_PRIVATE);
+        Usage prev = new Usage(preferences.getInt(packageName, 0));
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putInt(packageName, minute);
+        editor.commit();
+        return prev;
+    }
 }

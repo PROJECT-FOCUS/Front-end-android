@@ -79,8 +79,7 @@
             android:layout_marginLeft="19.3dp"
             android:layout_marginRight="19.3dp"
             android:background="@drawable/white_rect"
-            android:orientation="vertical"
-            android:padding="28.8dp">
+            android:orientation="vertical">
 
 
             <LinearLayout
@@ -104,7 +103,7 @@
 
 
                     <com.team.focus.ui.customfonts.TextViewSFProDisplayBlack
-                        android:id="@+id/exp_ussge_time"
+                        android:id="@+id/act_usage_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
@@ -142,7 +141,7 @@
 
 
                     <com.team.focus.ui.customfonts.TextViewSFProDisplayBlack
-                        android:id="@+id/act_usage_time"
+                        android:id="@+id/exp_usage_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"

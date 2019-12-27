@@ -36,8 +36,4 @@ public class AddMonitorAppActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), "Tab to add an app to be monitored",
                 Toast.LENGTH_LONG).show();
     }
-
-    private void killActivity() {
-        finish();
-    }
 }

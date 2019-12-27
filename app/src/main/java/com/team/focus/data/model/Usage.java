@@ -12,8 +12,8 @@ public class Usage implements Comparable<Usage> {
     }
 
     public Usage(int minute) {
-        this.hour = minute % 60;
-        this.minute = minute / 60;
+        this.hour = minute / 60;
+        this.minute = minute % 60;
     }
 
     public int getHour() {

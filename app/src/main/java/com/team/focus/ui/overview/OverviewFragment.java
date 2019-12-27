@@ -18,6 +18,7 @@ import com.team.focus.AddMonitorAppActivity;
 import com.team.focus.R;
 import com.team.focus.data.model.OverviewItem;
 import com.team.focus.data.model.SharedPreferenceAccessUtils;
+import com.team.focus.data.model.Usage;
 import com.team.focus.ui.Adaptor.OverviewRecycleAdaptor;
 
 import java.util.ArrayList;
@@ -49,7 +50,7 @@ public class OverviewFragment extends Fragment {
 //                new OverviewItem("Wechat",
 //                        "com.tecent.wechat", new Usage(2, 30), new Usage(2, 0))));
 
-        adapter = new OverviewRecycleAdaptor(root.getContext(), items);
+        adapter = new OverviewRecycleAdaptor(root.getContext(), items, this, getFragmentManager());
         recyclerView.setAdapter(adapter);
 
         int startTime = SharedPreferenceAccessUtils.getTimeIntervalStart(root.getContext());
@@ -79,5 +80,34 @@ public class OverviewFragment extends Fragment {
         });
 
         return root;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        String packageName;
+        int expectedMinute;
+        switch (resultCode) {
+            case 1 :
+                packageName = data.getExtras().getString("packageName");
+                items.remove((new OverviewItem(null, packageName,
+                        null, null, null)));
+                adapter = new OverviewRecycleAdaptor(this.getContext(), items, this, getFragmentManager());
+                recyclerView.setAdapter(adapter);
+
+            case 2 :
+                packageName = data.getExtras().getString("packageName");
+                expectedMinute = data.getExtras().getInt("expected");
+                int index = items.indexOf((new OverviewItem(null, packageName,
+                        null, null, null)));
+                if (index == -1) {
+                    return;
+                }
+                OverviewItem item = items.get(index);
+
+                item.setExpectedUsage(new Usage(expectedMinute));
+                adapter = new OverviewRecycleAdaptor(this.getContext(), items, this, getFragmentManager());
+                recyclerView.setAdapter(adapter);
+        }
     }
 }

@@ -4,6 +4,7 @@ import android.widget.TextView;
 
 import com.team.focus.R;
 import com.team.focus.data.model.SharedPreferenceAccessUtils;
+import com.team.focus.data.model.Usage;
 
 public class UpdateTextField {
     public static void updateText(final TextView textView) {
@@ -14,5 +15,9 @@ public class UpdateTextField {
             text += SharedPreferenceAccessUtils.getTimeIntervalEnd(textView.getContext());
         }
         textView.setText(text + " ");
+    }
+
+    public static void updateUsageTextView(TextView textView, Usage usage) {
+        textView.setText(usage.toString());
     }
 }
