@@ -1,6 +1,61 @@
 package com.team.focus.ui.monitor;
 
 import com.team.focus.R;
+//
+//import android.os.Bundle;
+//import androidx.appcompat.app.AppCompatActivity;
+//import android.content.pm.PackageManager;
+//import android.content.Context;
+//
+//import android.app.usage.UsageStats;
+//import android.app.usage.UsageStatsManager;
+//import java.util.Calendar;
+//import java.util.List;
+//import java.util.Map;
+//
+//import android.provider.Settings;
+//import android.content.Intent;
+//
+//import android.widget.TextView;
+//
+//
+//
+///**
+// * Activity to display package usage statistics.
+// */
+//public class UsageStatsActivity extends  AppCompatActivity{
+//
+//    private TextView words;
+//    private UsageStatsManager usageStatsManager;
+//    private PackageManager packageManager;
+//
+//    @Override
+//    protected void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        setContentView(R.layout.app_usage);
+//
+//        words=findViewById(R.id.first);
+//
+//
+//        usageStatsManager = (UsageStatsManager) this.getSystemService(Context.USAGE_STATS_SERVICE);
+//
+//
+//
+//
+//        Calendar calendar = Calendar.getInstance();
+//        calendar.add(Calendar.MONTH, -1);
+//        long start = calendar.getTimeInMillis();
+//        long end = System.currentTimeMillis();
+//
+//        List<UsageStats> stats = usageStatsManager.queryUsageStats(UsageStatsManager.INTERVAL_YEARLY,start,end);
+//        Map<String, UsageStats> statsMap = usageStatsManager.queryAndAggregateUsageStats(start, end);
+//
+//        words.setText(usageStatsManager.queryEventsForSelf(start,end).toString());
+//        //startActivity(new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS));
+//
+//    }
+//}
+
 import android.app.Activity;
 import android.app.usage.UsageStats;
 import android.app.usage.UsageStatsManager;

@@ -2,6 +2,7 @@ package com.team.focus;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,8 +18,12 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import android.widget.Button;
+import com.team.focus.ui.monitor.UsageStatsActivity;
 
 public class MainActivity extends AppCompatActivity {
+
+    private Button b1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +41,16 @@ public class MainActivity extends AppCompatActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
         }
+
+        b1=findViewById(R.id.button);
+
+        b1.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, UsageStatsActivity.class));
+
+            }
+        });
     }
 
     /**
