@@ -29,8 +29,8 @@ public class OverviewItem {
         public static ArrayList<OverviewItem> getOverviewItemList(Context context) {
             Set<String> packageNames = SharedPreferenceAccessUtils.getMonitoredApps(context);
             List<AppInfo> apps = InstalledApps.getMonitorAppInfo(packageNames, context);
-            Map<String, Usage> expected = SharedPreferenceAccessUtils.getExpectedUsage(context, packageNames);
-            Map<String, Usage> actual = SharedPreferenceAccessUtils.getActualUsage(context, packageNames);
+            Map<String, Usage> expected = SharedPreferenceAccessUtils.getExpectedUsage(context);
+            Map<String, Usage> actual = SharedPreferenceAccessUtils.getActualUsage(context);
 
             ArrayList<OverviewItem> list = new ArrayList<>();
 

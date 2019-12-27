@@ -125,10 +125,6 @@ public class SharedPreferenceAccessUtils {
         SharedPreferences preferences = context.getSharedPreferences("FOCUS",
                 Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
-        SharedPreferences.Editor pExpected = context.getSharedPreferences("FOCUS.Expected",
-                Context.MODE_PRIVATE).edit();
-        SharedPreferences.Editor pActual = context.getSharedPreferences("FOCUS.Actual",
-                Context.MODE_PRIVATE).edit();
         Set<String> prev = preferences.getStringSet("savedMonitoredApps", new HashSet<String>());
         Iterator<String> iterator = prev.iterator();
 
@@ -137,13 +133,9 @@ public class SharedPreferenceAccessUtils {
             if (toDeletePackageNames.contains(curr)) {
                 iterator.remove();
             }
-            pExpected.putInt(curr, -1);
-            pActual.putInt(curr, -1);
         }
         editor.putStringSet("savedMonitoredApps", prev);
         editor.commit();
-        pExpected.commit();
-        pActual.commit();
     }
 
     public static void addMonitoredApps(Context context, Set<String> toAddPackageNames,
@@ -182,10 +174,10 @@ public class SharedPreferenceAccessUtils {
     /**
      * utils to get minute of expected usage for passed in packageName
      * @param context
-     * @param packageNames
      * @return
      */
-    public static Map<String, Usage> getExpectedUsage(Context context, Set<String> packageNames) {
+    public static Map<String, Usage> getExpectedUsage(Context context) {
+        Set<String> packageNames = getMonitoredApps(context);
         Map<String, Usage> expectedUsage = new HashMap<>();
         SharedPreferences preferences = context.getSharedPreferences("FOCUS.Expected", Context.MODE_PRIVATE);
         for (String packageName : packageNames) {
@@ -197,7 +189,8 @@ public class SharedPreferenceAccessUtils {
         return expectedUsage;
     }
 
-    public static Map<String, Usage> getActualUsage(Context context, Set<String> packageNames) {
+    public static Map<String, Usage> getActualUsage(Context context) {
+        Set<String> packageNames = getMonitoredApps(context);
         Map<String, Usage> actualUsage = new HashMap<>();
         SharedPreferences preferences = context.getSharedPreferences("FOCUS.Actual", Context.MODE_PRIVATE);
         for (String packageName : packageNames) {
