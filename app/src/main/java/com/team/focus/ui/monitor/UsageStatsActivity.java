@@ -266,6 +266,19 @@ public class UsageStatsActivity extends Activity implements OnItemSelectedListen
         }
     }
 
+    public List<UsageStats> getCurrentUsageStatistics() {
+        //Setting default start time
+        int BEGIN_HOUR = 0;
+        int BEGIN_MINUTE = 0;
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.HOUR, BEGIN_HOUR); // Change BEGIN_HOUR to the user designated hour
+        cal.set(Calendar.MINUTE, BEGIN_MINUTE); //Change BEGIN_MINUTE to the user designated minute
+        List<UsageStats> queryUsageStats = mUsageStatsManager
+                .queryUsageStats(UsageStatsManager.INTERVAL_DAILY, cal.getTimeInMillis(),
+                        System.currentTimeMillis());
+        return queryUsageStats;
+    }
+
     /** Called when the activity is first created. */
     @Override
     protected void onCreate(Bundle icicle) {
