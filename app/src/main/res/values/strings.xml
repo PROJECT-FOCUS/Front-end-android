@@ -17,4 +17,13 @@
     <string name="button_logout">Logout</string>
     <string name="user_avatar">avatar</string>
     <string name="login_banner">Login to your account</string>
+
+    <!-- Monitor -->
+    <string name="open_app_usage_setting">Open Apps with usage access settings</string>
+    <string name="last_time_used">"Last time used: "</string>
+    <string name="time_span">"Time span: "</string>
+    <string name="display_order_text">Sort by:</string>
+    <string name="app_name_label">App</string>
+    <string name="last_time_used_label">Last time used</string>
+    <string name="usage_time_label">Usage time</string>
 </resources>
