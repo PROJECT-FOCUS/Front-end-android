@@ -3,6 +3,7 @@ package com.team.focus.ui.overview;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,13 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.team.focus.R;
 import com.team.focus.data.model.OverviewItem;
 import com.team.focus.data.model.SharedPreferenceAccessUtils;
@@ -23,7 +31,9 @@ import com.team.focus.data.model.Usage;
 import com.team.focus.ui.utils.ExpectedUsagePickerFragment;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 
 public class AppMonitorFragment extends DialogFragment {
 
@@ -84,8 +94,41 @@ public class AppMonitorFragment extends DialogFragment {
                 // update local
                 SharedPreferenceAccessUtils.updateAppExpectedUsage(context, item.getPackageName(), cache.toMinute());
 
-                // sync cloud
+               /* // sync cloud
                 // Todo: assign to @Xueting
+                //use POST request for update for now; may change to PUT request if database servlet finds necessary
+                RequestQueue queue = Volley.newRequestQueue(context);
+                final String url = "localhost:8080/update";//assumed servlet name
+                final Usage newExpectedUsage = cache;
+                StringRequest postRequest = new StringRequest(Request.Method.POST, url,
+                        new Response.Listener<String>()
+                        {
+                            @Override
+                            public void onResponse(String response) {
+                                // response
+                                Log.d("Response", response);
+                            }
+                        },
+                        new Response.ErrorListener()
+                        {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                // error
+                                Log.d("Error.Response", error.toString());
+                            }
+                        }
+                ) {
+                    @Override
+                    protected Map<String, String> getParams()
+                    {
+                        Map<String, String>  params = new HashMap<String, String>();
+                        params.put("packageName", item.getPackageName());
+                        params.put("expectedUsage", newExpectedUsage.toString());
+                        return params;
+                    }
+                };
+                queue.add(postRequest);
+*/
 
                 Toast.makeText(context, "Expected Usage has changed from " +
                         item.getExpectedUsage().toString() + " to " +
@@ -108,8 +151,51 @@ public class AppMonitorFragment extends DialogFragment {
                 SharedPreferenceAccessUtils.deleteMonitoredApps(context, new HashSet<String>(
                         Arrays.asList(packageName.getText().toString())));
 
-                // Todo: assign to @Xueting
+                /*// Todo: assign to @Xueting
                 // cloud sync
+                RequestQueue queue = Volley.newRequestQueue(context);
+                final String url = "localhost:8080/update";//assumed servlet name
+                StringRequest deleteRequest = new StringRequest(Request.Method.POST, url,
+                        new Response.Listener<String>()
+                        {
+                            @Override
+                            public void onResponse(String response) {
+                                // response
+                                Log.d("Response", response);
+                            }
+                        },
+                        new Response.ErrorListener()
+                        {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                // error
+                                Log.d("Error.Response", error.toString());
+                            }
+                        }
+                ){
+                    @Override
+                    protected Map<String, String> getParams()
+                    {
+                        Map<String, String>  params = new HashMap<String, String>();
+                        params.put("appName", item.getAppName());
+                        params.put("packageName", item.getPackageName());
+                        params.put("icon", item.getIcon().toString());
+                        params.put("actualUsage", item.getActualUsage().toString());
+                        params.put("expectedUsage", item.getExpectedUsage().toString());
+                        return params;
+                    }
+                    //DELETE request in volley cannot take body; use POST request for a workaround for deleting item now; may optimize later
+                    @Override
+                    public Map<String, String> getHeaders() throws AuthFailureError {
+                        Map<String, String>  headers = new HashMap<String, String> ();
+                        headers.put("X-HTTP-Method-Override", "DELETE");
+                        headers.put("Accept", "application/json");
+                        headers.put("Content-Type", "application/json");
+
+                        return headers;
+                    }
+                };
+                queue.add(deleteRequest);*/
 
                 Bundle bundle = new Bundle();
                 bundle.putString("packageName", item.getPackageName());

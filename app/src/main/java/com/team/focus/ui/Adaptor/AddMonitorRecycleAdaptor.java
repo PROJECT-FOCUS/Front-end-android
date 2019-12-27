@@ -3,6 +3,7 @@ package com.team.focus.ui.Adaptor;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,12 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.team.focus.MainActivity;
 import com.team.focus.R;
 import com.team.focus.data.model.AppInfo;
@@ -91,8 +98,46 @@ public class AddMonitorRecycleAdaptor extends RecyclerView.Adapter<AddMonitorRec
                         new HashSet<String>(Arrays.asList(appPackageName)),
                         expectedUsage, actualUsage);
 
-                // cloud update
-                // Todo: assign to @Xueting, upload newly added monitored list to cloud
+                /*
+                 //cloud update
+                 //Todo: assign to @Xueting, upload newly added monitored list to cloud
+                //make a HTTP POST request to send newly added monitored app to backend
+                RequestQueue queue = Volley.newRequestQueue(context);
+                final String url = "localhost:8080/overview";//assumed servlet name
+                final Usage aUsage = actualUsage.get(appPackageName);
+                final Usage eUsage = expectedUsage.get(appPackageName);
+                StringRequest postRequest = new StringRequest(Request.Method.POST, url,
+                        new Response.Listener<String>()
+                        {
+                            @Override
+                            public void onResponse(String response) {
+                                // response
+                                Log.d("Response", response);
+                            }
+                        },
+                        new Response.ErrorListener()
+                        {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                // error
+                                Log.d("Error.Response", error.toString());
+                            }
+                        }
+                ) {
+                    @Override
+                    protected Map<String, String> getParams()
+                    {
+                        Map<String, String>  params = new HashMap<String, String>();
+                        params.put("appName", item.getAppName());
+                        params.put("packageName", item.getPackageName());
+                        params.put("icon", item.getIcon().toString());
+                        params.put("actualUsage", aUsage.toString());
+                        params.put("expectedUsage", eUsage.toString());
+                        return params;
+                    }
+                };
+                queue.add(postRequest);
+                 */
                 Intent intent = new Intent(context, MainActivity.class);
                 Toast.makeText(context, "App " + item.getAppName()
                         + "has successfully add to monitor list", Toast.LENGTH_SHORT).show();
@@ -107,4 +152,6 @@ public class AddMonitorRecycleAdaptor extends RecyclerView.Adapter<AddMonitorRec
     public int getItemCount() {
         return items.size();
     }
+
+
 }
