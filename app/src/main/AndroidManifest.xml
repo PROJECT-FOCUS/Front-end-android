@@ -11,6 +11,8 @@
     <uses-permission
         android:name="android.permission.PACKAGE_USAGE_STATS"
         tools:ignore="ProtectedPermissions"/>
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
 
     <application
         android:allowBackup="true"
@@ -19,6 +21,8 @@
         android:roundIcon="@mipmap/ic_launcher_circle"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <service android:name=".service.MonitorService"
+            android:foregroundServiceType="dataSync"></service>
         <activity android:name=".AddMonitorAppActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
         <activity

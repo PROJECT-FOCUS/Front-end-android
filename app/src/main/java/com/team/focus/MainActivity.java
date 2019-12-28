@@ -15,6 +15,7 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.team.focus.data.model.SharedPreferenceAccessUtils;
+import com.team.focus.service.MonitorService;
 import com.team.focus.ui.utils.TimePickerFragment;
 
 
@@ -36,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
         }
+        startService(new Intent(this, MonitorService.class));
     }
 
     /**
@@ -49,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
     public void bntLogout(View view) {
         SharedPreferenceAccessUtils.removeLoginUser(view.getContext());
         Intent login = new Intent(view.getContext(), LoginActivity.class);
+        stopService(new Intent(this, MonitorService.class));
         startActivity(login);
         finish();
     }
