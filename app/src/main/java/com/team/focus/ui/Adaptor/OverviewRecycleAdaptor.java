@@ -73,7 +73,9 @@ public class OverviewRecycleAdaptor extends RecyclerView.Adapter<OverviewRecycle
         final OverviewItem item = items.get(position);
         holder.appName.setText(item.getAppName());
         holder.packageName.setText(item.getPackageName());
-        holder.usagePercentage.setText(item.getUsagePercentage() + "%");
+        String percentage = item.getExpectedUsage().toMinute() == 0 ?
+                "N/A" : item.getUsagePercentage() + "%";
+        holder.usagePercentage.setText(percentage);
         Usage expect = item.getExpectedUsage();
         Usage actual = item.getActualUsage();
         holder.expectedUsage.setText("Expected  " + expect.toString());
