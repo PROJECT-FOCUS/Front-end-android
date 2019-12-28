@@ -17,6 +17,18 @@ public class SharedPreferenceAccessUtils {
      * SharedPreference default name "FOCUS"
      */
 
+    public static boolean getFirstOpen(Context context) {
+        return context.getSharedPreferences("FOCUS", Context.MODE_PRIVATE)
+                .getBoolean("firstOpen", false);
+    }
+
+    public static void setOpened(Context context) {
+        SharedPreferences.Editor editor = context.getSharedPreferences("FOCUS",
+                Context.MODE_PRIVATE).edit();
+        editor.putBoolean("firstOpen", true);
+        editor.apply();
+    }
+
     /**
      * register the user in local database to avoid constantly asking login when app restarts
      * save UI (probably used for data transmission with server)
@@ -178,23 +190,12 @@ public class SharedPreferenceAccessUtils {
         Map<String, Usage> expectedUsage = new HashMap<>();
         SharedPreferences preferences = context.getSharedPreferences("FOCUS.Expected", Context.MODE_PRIVATE);
         for (String packageName : packageNames) {
-            int minute = preferences.getInt(packageName, 0);
+            int minute = preferences.getInt(packageName, -1);
             if (minute >= 0) {
                 expectedUsage.put(packageName, new Usage(minute));
             }
         }
         return expectedUsage;
-    }
-
-    public static Usage getExpectedUsage(Context context, String packageName) {
-        int minutes = context.getSharedPreferences("FOCUS.Expected", Context.MODE_PRIVATE)
-                .getInt(packageName, -1);
-
-        if (minutes >= 0) {
-            return new Usage(minutes);
-        }
-
-        return null;
     }
 
     public static Map<String, Usage> getActualUsage(Context context) {

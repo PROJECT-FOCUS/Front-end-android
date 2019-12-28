@@ -77,7 +77,7 @@ public class OverviewRecycleAdaptor extends RecyclerView.Adapter<OverviewRecycle
                 "N/A" : item.getUsagePercentage() + "%";
         holder.usagePercentage.setText(percentage);
         Usage expect = item.getExpectedUsage();
-        Usage actual = item.getActualUsage() == null ? new Usage(0) : item.getActualUsage();
+        Usage actual = item.getActualUsage();
         holder.expectedUsage.setText("Expected  " + expect.toString());
         holder.actualUsage.setText("Actual  " + actual.toString());
         holder.appIcon.setImageDrawable(item.getIcon());

@@ -4,12 +4,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import com.team.focus.R;
@@ -24,7 +24,7 @@ public class AccountFragment extends Fragment {
 
         final Switch notification = root.findViewById(R.id.switch2);
         final Switch isActiveModeSwitch = root.findViewById(R.id.switch_active_mode);
-        final ConstraintLayout layoutEnd = root.findViewById(R.id.end_time_bar);
+        final LinearLayout layoutEnd = root.findViewById(R.id.end_time_bar);
         final TextView textStart = root.findViewById(R.id.start_time);
         final TextView textEnd = root.findViewById(R.id.end_time);
 
