@@ -2,7 +2,6 @@ package com.team.focus.ui.overview;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,9 +21,7 @@ import com.team.focus.data.model.SharedPreferenceAccessUtils;
 import com.team.focus.data.model.Usage;
 import com.team.focus.ui.Adaptor.OverviewRecycleAdaptor;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class OverviewFragment extends Fragment {
 
@@ -58,18 +55,19 @@ public class OverviewFragment extends Fragment {
 
         int startTime = SharedPreferenceAccessUtils.getTimeIntervalStart(root.getContext());
         int endTime = SharedPreferenceAccessUtils.getTimeIntervalEnd(root.getContext());
+        Integer interval = null;
         boolean isActiveMode = SharedPreferenceAccessUtils.getIsActiveMode(root.getContext());
-
-        SimpleDateFormat format = new SimpleDateFormat("MM/dd/HH:mm");
-
-        Pair<Long, Long> intervalTime = SharedPreferenceAccessUtils.getUserInterval(root.getContext());
-
-        String text = format.format(new Date(intervalTime.first)) + " ~ " +
-                format.format(new Date(intervalTime.second));
-
-        String mode = isActiveMode ? "active mode" : "one-day mode";
-        textViewActive.setText(text);
-        textViewInterval.setText(mode);
+        String textActive = null;
+        if (isActiveMode) {
+            textActive = "Monitor from " + startTime + " to " + endTime + " today";
+            interval = endTime - startTime;
+        } else {
+            textActive = "Monitor from " + startTime + " to " + startTime + " next day";
+            interval = 24;
+        }
+        String textInterval = interval + " hours in total";
+        textViewActive.setText(textActive);
+        textViewInterval.setText(textInterval);
 
         textViewUser.setText(SharedPreferenceAccessUtils.getUsername(root.getContext()));
 

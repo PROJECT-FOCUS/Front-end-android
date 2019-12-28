@@ -2,9 +2,7 @@ package com.team.focus.data.model;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Pair;
 
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -137,7 +135,7 @@ public class SharedPreferenceAccessUtils {
             }
         }
         editor.putStringSet("savedMonitoredApps", prev);
-        editor.apply();
+        editor.commit();
     }
 
     public static void addMonitoredApps(Context context, Set<String> toAddPackageNames,
@@ -168,9 +166,9 @@ public class SharedPreferenceAccessUtils {
         Set<String> prev = pFocus.getStringSet("savedMonitoredApps", new HashSet<String>());
         prev.addAll(toAddPackageNames);
         editorFocus.putStringSet("savedMonitoredApps", prev);
-        editorFocus.apply();
-        editorActual.apply();
-        editorExpected.apply();
+        editorFocus.commit();
+        editorActual.commit();
+        editorExpected.commit();
     }
 
     /**
@@ -209,81 +207,7 @@ public class SharedPreferenceAccessUtils {
         Usage prev = new Usage(preferences.getInt(packageName, 0));
         SharedPreferences.Editor editor = preferences.edit();
         editor.putInt(packageName, minute);
-        editor.apply();
+        editor.commit();
         return prev;
-    }
-
-    public static Pair<Long, Long> getUserInterval(Context context) {
-        boolean isActiveMode = getIsActiveMode(context);
-        int startTime = getTimeIntervalStart(context);
-        int endTime = getTimeIntervalEnd(context);
-        Calendar calendar = Calendar.getInstance();
-
-        if (isActiveMode) {
-            if (calendar.get(Calendar.HOUR_OF_DAY) < startTime) {
-                // return yesterday's system query
-
-                //turn to yesterday first
-                calendar.add(Calendar.DATE, -1);
-                // set start time
-                calendar.set(Calendar.HOUR_OF_DAY, startTime);
-                calendar.set(Calendar.MINUTE, 0);
-                calendar.set(Calendar.SECOND, 0);
-                calendar.set(Calendar.MILLISECOND, 0);
-                Long start = calendar.getTimeInMillis();
-                calendar.set(Calendar.HOUR_OF_DAY, endTime);
-                Long end = calendar.getTimeInMillis();
-
-                return new Pair<>(start, end);
-
-            } else if (calendar.get(Calendar.HOUR_OF_DAY) >= startTime &&
-                    calendar.get(Calendar.HOUR_OF_DAY) < endTime) {
-                // get current
-                Long end = calendar.getTimeInMillis();
-
-                // get start today
-                calendar.set(Calendar.HOUR_OF_DAY, startTime);
-                calendar.set(Calendar.MINUTE, 0);
-                calendar.set(Calendar.SECOND, 0);
-                calendar.set(Calendar.MILLISECOND, 0);
-                Long start = calendar.getTimeInMillis();
-
-                return new Pair<>(start, end);
-            } else {
-                calendar.set(Calendar.HOUR_OF_DAY, startTime);
-                calendar.set(Calendar.MINUTE, 0);
-                calendar.set(Calendar.SECOND, 0);
-                calendar.set(Calendar.MILLISECOND, 0);
-                Long start = calendar.getTimeInMillis();
-                calendar.set(Calendar.HOUR_OF_DAY, endTime);
-                Long end = calendar.getTimeInMillis();
-                return new Pair<>(start, end);
-            }
-        } else {
-            if (calendar.get(Calendar.HOUR_OF_DAY) < startTime) {
-                Long end = calendar.getTimeInMillis();
-
-                //turn to yesterday
-                calendar.add(Calendar.DATE, -1);
-                // set start time
-                calendar.set(Calendar.HOUR_OF_DAY, startTime);
-                calendar.set(Calendar.MINUTE, 0);
-                calendar.set(Calendar.SECOND, 0);
-                calendar.set(Calendar.MILLISECOND, 0);
-                Long start = calendar.getTimeInMillis();
-
-                return new Pair<>(start, end);
-            } else {
-                Long end = calendar.getTimeInMillis();
-
-                calendar.set(Calendar.HOUR_OF_DAY, startTime);
-                calendar.set(Calendar.MINUTE, 0);
-                calendar.set(Calendar.SECOND, 0);
-                calendar.set(Calendar.MILLISECOND, 0);
-                Long start = calendar.getTimeInMillis();
-
-                return new Pair<>(start, end);
-            }
-        }
     }
 }
