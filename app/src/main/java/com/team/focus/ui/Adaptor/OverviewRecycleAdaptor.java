@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.team.focus.R;
@@ -22,6 +24,8 @@ public class OverviewRecycleAdaptor extends RecyclerView.Adapter<OverviewRecycle
 
     private Context context;
     private List<OverviewItem> items;
+    private Fragment parentFragment;
+    private FragmentManager fragmentManager;
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
@@ -47,9 +51,12 @@ public class OverviewRecycleAdaptor extends RecyclerView.Adapter<OverviewRecycle
 
     }
 
-    public OverviewRecycleAdaptor(Context context, List<OverviewItem> items) {
+    public OverviewRecycleAdaptor(Context context, List<OverviewItem> items,
+                                  Fragment parentFragment, FragmentManager fragmentManager) {
         this.items = items;
         this.context = context;
+        this.parentFragment = parentFragment;
+        this.fragmentManager = fragmentManager;
     }
 
     @NonNull
@@ -75,6 +82,8 @@ public class OverviewRecycleAdaptor extends RecyclerView.Adapter<OverviewRecycle
 
         if (actual.compareTo(expect) > 0) {
             holder.actualUsage.setTextColor(context.getResources().getColor(R.color.colorAccent));
+        } else if (actual.compareTo(expect) == 0) {
+            holder.actualUsage.setTextColor(context.getResources().getColor(R.color.yellow));
         }
 
         holder.itemView.setClickable(true);
@@ -82,8 +91,10 @@ public class OverviewRecycleAdaptor extends RecyclerView.Adapter<OverviewRecycle
             @Override
             public void onClick(View v) {
                 AppCompatActivity activity = (AppCompatActivity) v.getContext();
-                AppMonitorFragment itemOp = new AppMonitorFragment(item, activity);
-                itemOp.show(activity.getSupportFragmentManager(), "popup");
+                AppMonitorFragment itemOperation = new AppMonitorFragment(item, activity);
+                itemOperation.setTargetFragment(parentFragment,
+                        v.getResources().getInteger(R.integer.item_operation));
+                itemOperation.show(fragmentManager, "onItemOperation");
             }
         });
     }

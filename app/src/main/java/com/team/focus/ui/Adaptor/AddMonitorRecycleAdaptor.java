@@ -71,20 +71,31 @@ public class AddMonitorRecycleAdaptor extends RecyclerView.Adapter<AddMonitorRec
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // time when adding an app
+
+
+                // Actual usage -> monitor module
+                // minute(int)
+
+                // local update
                 String appPackageName = item.getPackageName();
                 Map<String, Usage> expectedUsage = new HashMap<>();
                 Map<String, Usage> actualUsage = new HashMap<>();
 
                 expectedUsage.put(appPackageName, new Usage(0));
+
+                // Todo: assign to @Xueting, gather actual usage from Monitor module
                 actualUsage.put(appPackageName, new Usage(0));
 
                 SharedPreferenceAccessUtils.addMonitoredApps(context,
                         new HashSet<String>(Arrays.asList(appPackageName)),
                         expectedUsage, actualUsage);
 
+                // cloud update
+                // Todo: assign to @Xueting, upload newly added monitored list to cloud
                 Intent intent = new Intent(context, MainActivity.class);
                 Toast.makeText(context, "App " + item.getAppName()
-                        + "has successfully add to monitor list", Toast.LENGTH_SHORT);
+                        + "has successfully add to monitor list", Toast.LENGTH_SHORT).show();
                 context.startActivity(intent);
                 Activity parent = (Activity)context;
                 parent.finish();

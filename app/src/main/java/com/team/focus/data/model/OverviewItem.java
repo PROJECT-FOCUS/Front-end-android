@@ -3,6 +3,8 @@ package com.team.focus.data.model;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 
+import androidx.annotation.Nullable;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -30,6 +32,8 @@ public class OverviewItem {
             Set<String> packageNames = SharedPreferenceAccessUtils.getMonitoredApps(context);
             List<AppInfo> apps = InstalledApps.getMonitorAppInfo(packageNames, context);
             Map<String, Usage> expected = SharedPreferenceAccessUtils.getExpectedUsage(context);
+
+            // Todo: assign to @Xueting, gather actual usage from monitor module
             Map<String, Usage> actual = SharedPreferenceAccessUtils.getActualUsage(context);
 
             ArrayList<OverviewItem> list = new ArrayList<>();
@@ -89,5 +93,13 @@ public class OverviewItem {
 
     public void setIcon(Drawable icon) {
         this.icon = icon;
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        if (!(obj instanceof OverviewItem)) {
+            return false;
+        }
+        return this.packageName.equals(((OverviewItem)obj).packageName);
     }
 }
