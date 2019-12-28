@@ -28,7 +28,7 @@ public class UsageFromSystem {
             if (allUsage.containsKey(packageName)) {
                 UsageStats stats = allUsage.get(packageName);
                 monitoredUsage.put(packageName,
-                        new Usage((int) TimeUnit.MILLISECONDS.toMinutes(stats.getTotalTimeInForeground())));
+                        new Usage((int) TimeUnit.MILLISECONDS.toMinutes(stats.getTotalTimeVisible())));
             }
         }
         return monitoredUsage;

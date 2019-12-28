@@ -45,10 +45,6 @@ public class Usage implements Comparable<Usage> {
 
     @Override
     public int compareTo(Usage o) {
-        if (o == null) {
-            return -1;
-        }
-
         if (this.hour == o.hour) {
             if (this.minute == o.minute) {
                 return 0;

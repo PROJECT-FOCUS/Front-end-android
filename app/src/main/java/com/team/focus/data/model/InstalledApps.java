@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -36,13 +37,14 @@ public class InstalledApps {
         List<PackageInfo> installedApps = packageManager.getInstalledPackages(0);
 
         for (PackageInfo installedApp : installedApps) {
-            if (installedApp.applicationInfo.icon != 0 &&
-                    ((installedApp.applicationInfo.flags & 1) != ApplicationInfo.FLAG_SYSTEM)) {
+            if (((installedApp.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 1) &&
+                    installedApp.applicationInfo.icon != 0) {
                 apps.add(new AppInfo(installedApp.applicationInfo.
                         loadLabel(packageManager).toString(),
                         installedApp.packageName,
                         installedApp.applicationInfo.loadIcon(packageManager))
                 );
+                Log.e("res", "2");
             }
         }
 
