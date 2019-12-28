@@ -81,11 +81,6 @@ public class AppMonitorFragment extends DialogFragment {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Toast.makeText(context, "Expected Usage has changed from " +
-                        item.getExpectedUsage().toString() + " to " +
-                        cache.toString(), Toast.LENGTH_SHORT).show();
-
                 // update local
                 SharedPreferenceAccessUtils.updateAppExpectedUsage(context, item.getPackageName(), cache.toMinute());
 
@@ -98,6 +93,9 @@ public class AppMonitorFragment extends DialogFragment {
                 Intent intent = new Intent().putExtras(bundle);
                 targetFragment.onActivityResult(getTargetRequestCode(),
                         getResources().getInteger(R.integer.item_changed), intent);
+                Toast.makeText(context, "Expected Usage has changed from " +
+                        item.getExpectedUsage().toString() + " to " +
+                        cache.toString(), Toast.LENGTH_SHORT).show();
                 dismiss();
             }
         });

@@ -141,7 +141,8 @@ public class SharedPreferenceAccessUtils {
     }
 
     public static void addMonitoredApps(Context context, Set<String> toAddPackageNames,
-                                        Map<String, Usage> expectedUsage) {
+                                        Map<String, Usage> expectedUsage,
+                                        Map<String, Usage> actualUsage) {
 
         SharedPreferences pFocus = context.getSharedPreferences("FOCUS",
                 Context.MODE_PRIVATE);
@@ -157,6 +158,10 @@ public class SharedPreferenceAccessUtils {
         for (String packageName : toAddPackageNames) {
             if (expectedUsage.containsKey(packageName)) {
                 editorExpected.putInt(packageName, expectedUsage.get(packageName).toMinute());
+            }
+
+            if (actualUsage.containsKey(packageName)) {
+                editorActual.putInt(packageName, actualUsage.get(packageName).toMinute());
             }
         }
 
