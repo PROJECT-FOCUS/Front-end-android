@@ -31,7 +31,7 @@ public class MonitorService extends Service {
     NotificationManager notificationManager;
 
     public static final String CHANNEL_ID = "ForegroundServiceChannel";
-    public static long SERVICE_PERIOD = 5000; //120000; // sync data every 2 minutes
+    public static long SERVICE_PERIOD = 120000; // sync data every 2 minutes
 
     @Override
     public void onCreate() {
