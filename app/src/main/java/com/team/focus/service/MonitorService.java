@@ -7,40 +7,36 @@ import android.app.NotificationManager;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.os.IBinder;
 
 import androidx.core.app.NotificationCompat;
 
 import com.team.focus.R;
-import com.team.focus.data.model.InstalledApps;
-import com.team.focus.data.model.OverviewItem;
 import com.team.focus.data.model.SharedPreferenceAccessUtils;
 import com.team.focus.data.model.Usage;
 import com.team.focus.data.model.UsageFromSystem;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class MonitorService extends Service {
 
     private Timer timer = null;
+    private Set<String> packageNames;
     private Context context;
-    NotificationManager notificationManager;
 
     public static final String CHANNEL_ID = "ForegroundServiceChannel";
-    public static long SERVICE_PERIOD = 5000; //120000; // sync data every 2 minutes
+    public static long SERVICE_PERIOD = 120000; // sync data every 2 minutes
 
     @Override
     public void onCreate() {
         super.onCreate();
         createNotificationChannel();
         context = this;
-        notificationManager =
-                (NotificationManager) getSystemService(Service.NOTIFICATION_SERVICE);
         start();
     }
 
@@ -54,14 +50,12 @@ public class MonitorService extends Service {
         if(timer == null)
         {
             timer = new Timer();
-            timer.schedule(new MonitoringTimerTask(), 0, SERVICE_PERIOD);
+            timer.schedule(new MonitoringTimerTask(), 500, SERVICE_PERIOD);
         }
         Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setContentTitle("FOCUS Foreground Service")
                 .setContentText("FOCUS is standing in the foreground to monitor your app usage")
                 .setSmallIcon(R.mipmap.ic_launcher_square)
-                .setStyle(new NotificationCompat.BigTextStyle().
-                        bigText("FOCUS is standing in the foreground to monitor your app usage"))
                 .build();
 
         startForeground(1, notification);
@@ -84,33 +78,15 @@ public class MonitorService extends Service {
             // sync cloud
 
             ActivityManager activityManager = (ActivityManager)MonitorService.this.getSystemService(ACTIVITY_SERVICE);
-            List<ActivityManager.AppTask> list = activityManager.getAppTasks();
-            String test = list.get(0).getTaskInfo().baseActivity.getPackageName();
-            String current = null;
-//            for (ActivityManager.RunningAppProcessInfo info : list) {
-//                if (info.importance == ActivityManager.RunningAppProcessInfo.IMPORTANCE_VISIBLE) {
-//                    current = info.processName;
-//                }
-//            }
-            if (!SharedPreferenceAccessUtils.getNotification(context) || current == null) {
+            List<ActivityManager.RunningTaskInfo> taskInfo = activityManager.getRunningTasks(1);
+            String current = taskInfo.get(0).topActivity.getPackageName();
+            if (!SharedPreferenceAccessUtils.getNotification(context)) {
                 return;
             }
 
             if (monitoredSet.get(current) != null && monitoredSet.get(current).
                     compareTo(SharedPreferenceAccessUtils.getExpectedUsage(context, current)) > 0) {
-                OverviewItem item = InstalledApps.getAppInfo(current, context);
-
-                Notification notification = new NotificationCompat.Builder(context, CHANNEL_ID)
-                        .setSmallIcon(R.mipmap.ic_launcher_square)
-                        .setLargeIcon(((BitmapDrawable)item.getIcon()).getBitmap())
-                        .setContentTitle("FOCUS detected an over expected use app")
-                        .setContentText(item.getAppName() + " is used too much")
-                        .setStyle(new NotificationCompat.BigTextStyle().
-                                bigText(item.getAppName() + " is used beyond expected time "
-                                        + item.getExpectedUsage().toString()))
-                        .build();
-
-                notificationManager.notify(1, notification);
+                // push notification
             }
         }
     }
