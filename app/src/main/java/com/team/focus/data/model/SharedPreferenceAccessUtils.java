@@ -163,9 +163,9 @@ public class SharedPreferenceAccessUtils {
         Set<String> prev = pFocus.getStringSet("savedMonitoredApps", new HashSet<String>());
         prev.addAll(toAddPackageNames);
         editorFocus.putStringSet("savedMonitoredApps", prev);
-        editorFocus.apply();
-        editorActual.apply();
-        editorExpected.apply();
+        editorFocus.commit();
+        editorActual.commit();
+        editorExpected.commit();
     }
 
     /**

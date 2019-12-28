@@ -1,6 +1,5 @@
 package com.team.focus.service;
 
-import android.app.ActivityManager;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -14,13 +13,13 @@ import android.os.IBinder;
 import androidx.core.app.NotificationCompat;
 
 import com.team.focus.R;
+import com.team.focus.data.model.AppInfo;
 import com.team.focus.data.model.InstalledApps;
-import com.team.focus.data.model.OverviewItem;
 import com.team.focus.data.model.SharedPreferenceAccessUtils;
 import com.team.focus.data.model.Usage;
 import com.team.focus.data.model.UsageFromSystem;
 
-import java.util.List;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -80,37 +79,27 @@ public class MonitorService extends Service {
         public void run()
         {
             Map<String, Usage> monitoredSet = UsageFromSystem.getMonitoredUsage(context);
+            Map<String, Usage> expected = SharedPreferenceAccessUtils.getExpectedUsage(context);
+            ArrayList<AppInfo> list = InstalledApps.getMonitorAppInfo(monitoredSet.keySet(), context);
 
-            // sync cloud
-
-            ActivityManager activityManager = (ActivityManager)MonitorService.this.getSystemService(ACTIVITY_SERVICE);
-            List<ActivityManager.AppTask> list = activityManager.getAppTasks();
-            String test = list.get(0).getTaskInfo().baseActivity.getPackageName();
-            String current = null;
-//            for (ActivityManager.RunningAppProcessInfo info : list) {
-//                if (info.importance == ActivityManager.RunningAppProcessInfo.IMPORTANCE_VISIBLE) {
-//                    current = info.processName;
-//                }
-//            }
-            if (!SharedPreferenceAccessUtils.getNotification(context) || current == null) {
+            if (!SharedPreferenceAccessUtils.getNotification(context)) {
                 return;
             }
 
-            if (monitoredSet.get(current) != null && monitoredSet.get(current).
-                    compareTo(SharedPreferenceAccessUtils.getExpectedUsage(context, current)) > 0) {
-                OverviewItem item = InstalledApps.getAppInfo(current, context);
-
-                Notification notification = new NotificationCompat.Builder(context, CHANNEL_ID)
-                        .setSmallIcon(R.mipmap.ic_launcher_square)
-                        .setLargeIcon(((BitmapDrawable)item.getIcon()).getBitmap())
-                        .setContentTitle("FOCUS detected an over expected use app")
-                        .setContentText(item.getAppName() + " is used too much")
-                        .setStyle(new NotificationCompat.BigTextStyle().
-                                bigText(item.getAppName() + " is used beyond expected time "
-                                        + item.getExpectedUsage().toString()))
-                        .build();
-
-                notificationManager.notify(1, notification);
+            for (AppInfo app : list) {
+                String packageName = app.getPackageName();
+                if (monitoredSet.get(packageName).compareTo(expected.get(packageName)) > 0) {
+                    Notification notification = new NotificationCompat.Builder(context, CHANNEL_ID)
+                            .setSmallIcon(R.mipmap.ic_launcher_square)
+                            .setLargeIcon(((BitmapDrawable) app.getIcon()).getBitmap())
+                            .setContentTitle("FOCUS detected an over expected use")
+                            .setContentText(app.getAppName() + " is used too much")
+                            .setStyle(new NotificationCompat.BigTextStyle().
+                                    bigText(app.getAppName() + " is used beyond expected time "
+                                            + expected.get(packageName).toString()))
+                            .build();
+                    notificationManager.notify(packageName.hashCode(), notification);
+                }
             }
         }
     }

@@ -30,19 +30,6 @@ public class InstalledApps {
         return apps;
     }
 
-    public static OverviewItem getAppInfo(String packageName, Context context) {
-        ArrayList<AppInfo> apps = getAllApps(context);
-        int index = apps.indexOf(new AppInfo(null, packageName, null));
-        if (index == -1) {
-            return null;
-        } else {
-            AppInfo app = apps.get(index);
-            Usage expectedUsage = SharedPreferenceAccessUtils.getExpectedUsage(context, packageName);
-            return new OverviewItem(app.getAppName(), packageName, expectedUsage, null,
-                    app.getIcon());
-        }
-    }
-
     private static ArrayList<AppInfo> getAllApps(Context context) {
         ArrayList<AppInfo> apps = new ArrayList<>();
         PackageManager packageManager = context.getPackageManager();
