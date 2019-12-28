@@ -1,6 +1,5 @@
 package com.team.focus.data.pipeline;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.net.HttpURLConnection;
@@ -8,13 +7,17 @@ import java.net.URL;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Recommendation {
+public class Overview {
 
-    public Set<String> getRecommendations(String username)   {
+    // return set of expected usage to expUsageResult[0]
+    // and set of actual usage to actUsageResult[0]
+    public void getExpectedAndActualUsage(String username,
+                                          Set<BackendExpectedUsageItem>[] expUsageResult,
+                                          Set<BackendActualUsageItem>[] actUsageResult)   {
 
-        Set<String>  recommendations = new HashSet<>();
+
         try {
-            URL url = new URL(BackendUtility.URL_RECOMMEND);
+            URL url = new URL(BackendUtility.URL_OVERVIEW);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
             conn.setRequestMethod("POST");
@@ -24,13 +27,13 @@ public class Recommendation {
             JSONObject response = BackendUtility.readJsonObjectFromResponse(conn);
             if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
                 // process response: set of overtimed_apps (by their package name)
-                recommendations = BackendUtility.readRecommendations(response);
+                expUsageResult[0] = BackendUtility.readExpectedUsage(response);
+                actUsageResult[0] = BackendUtility.readActualUsage(response);
+
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return recommendations;
     }
-
 }
