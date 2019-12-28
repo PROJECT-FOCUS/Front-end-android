@@ -7,10 +7,6 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.team.focus.data.model.SharedPreferenceAccessUtils;
-import com.team.focus.ui.utils.*;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 import androidx.navigation.NavController;
@@ -20,6 +16,10 @@ import androidx.navigation.ui.NavigationUI;
 
 import android.widget.Button;
 import com.team.focus.ui.monitor.UsageStatsActivity;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.team.focus.data.model.SharedPreferenceAccessUtils;
+import com.team.focus.ui.utils.TimePickerFragment;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -83,9 +83,14 @@ public class MainActivity extends AppCompatActivity {
      * @param v
      */
     public void showTimePickerDialog(View v) {
-        DialogFragment newFragment = new TimePickerFragment(v.getContext(),
-                v.getId() == R.id.start_time, (TextView) v);
+        DialogFragment newFragment;
+        if (v.getId() == R.id.start_time_bar) {
+            newFragment = new TimePickerFragment(v.getContext(),
+                    true, (TextView) v.findViewById(R.id.start_time));
+        } else {
+            newFragment = new TimePickerFragment(v.getContext(),
+                    false, (TextView) v.findViewById(R.id.end_time));
+        }
         newFragment.show(getSupportFragmentManager(), "timePicker");
     }
-
 }

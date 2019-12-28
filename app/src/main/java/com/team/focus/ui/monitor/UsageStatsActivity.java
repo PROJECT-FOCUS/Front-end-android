@@ -1,6 +1,7 @@
 package com.team.focus.ui.monitor;
 
 import com.team.focus.R;
+import com.team.focus.data.model.SharedPreferenceAccessUtils;
 //
 //import android.os.Bundle;
 //import androidx.appcompat.app.AppCompatActivity;
@@ -72,10 +73,12 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.HashMap;
 
 import android.text.format.DateUtils;
 import android.util.ArrayMap;
 import android.util.Log;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -96,6 +99,36 @@ public class UsageStatsActivity extends Activity implements OnItemSelectedListen
     private LayoutInflater mInflater;
     private UsageStatsAdapter mAdapter;
     private PackageManager mPm;
+
+    public HashMap<String, Integer> getCurrentUsageStatistics() {
+            /*//Setting default start time
+            int BEGIN_HOUR = 0;
+            int BEGIN_MINUTE = 0;
+            Calendar cal = Calendar.getInstance();
+            cal.set(Calendar.HOUR, BEGIN_HOUR); // Change BEGIN_HOUR to the user designated hour
+            cal.set(Calendar.MINUTE, BEGIN_MINUTE); //Change BEGIN_MINUTE to the user designated minute*/
+
+        Pair<Long, Long>timeInterval = SharedPreferenceAccessUtils.getUserInterval();
+
+        List<UsageStats> queryUsageStats = mUsageStatsManager
+                .queryUsageStats(UsageStatsManager.INTERVAL_DAILY,timeInterval.first,
+                        timeInterval.second);
+
+        HashMap<String, Integer> map = new HashMap<>();
+        final int statCount = queryUsageStats.size();
+        for (int i = 0; i < statCount; i++){
+            final android.app.usage.UsageStats pkgStats = queryUsageStats.get(i);
+            try {
+                Integer actualTime = (int) pkgStats.getTotalTimeVisible() / 60000;
+                map.put(pkgStats.getPackageName(), Integer.valueOf(actualTime));
+            } catch(NameNotFoundException e){
+                //package may be gone.
+            }
+
+        }
+
+        return map;
+    }
 
     public static class AppNameComparator implements Comparator<UsageStats> {
         private Map<String, String> mAppLabelList;
@@ -137,8 +170,8 @@ public class UsageStatsActivity extends Activity implements OnItemSelectedListen
     class UsageStatsAdapter extends BaseAdapter {
         // Constants defining order for display order
         private static final int _DISPLAY_ORDER_USAGE_TIME = 0;
-        private static final int _DISPLAY_ORDER_LAST_TIME_USED = 1;
-        private static final int _DISPLAY_ORDER_APP_NAME = 2;
+        //private static final int _DISPLAY_ORDER_LAST_TIME_USED = 1;
+        //private static final int _DISPLAY_ORDER_APP_NAME = 2;
 
         private int mDisplayOrder = _DISPLAY_ORDER_USAGE_TIME;
         private LastTimeUsedComparator mLastTimeUsedComparator = new LastTimeUsedComparator();
@@ -187,6 +220,7 @@ public class UsageStatsActivity extends Activity implements OnItemSelectedListen
             mAppLabelComparator = new AppNameComparator(mAppLabelMap);
             sortList();
         }
+
 
         @Override
         public int getCount() {
@@ -255,29 +289,19 @@ public class UsageStatsActivity extends Activity implements OnItemSelectedListen
             if (mDisplayOrder == _DISPLAY_ORDER_USAGE_TIME) {
                 if (localLOGV) Log.i(TAG, "Sorting by usage time");
                 Collections.sort(mPackageStats, mUsageTimeComparator);
-            } else if (mDisplayOrder == _DISPLAY_ORDER_LAST_TIME_USED) {
-                if (localLOGV) Log.i(TAG, "Sorting by last time used");
-                Collections.sort(mPackageStats, mLastTimeUsedComparator);
-            } else if (mDisplayOrder == _DISPLAY_ORDER_APP_NAME) {
-                if (localLOGV) Log.i(TAG, "Sorting by application name");
-                Collections.sort(mPackageStats, mAppLabelComparator);
             }
+//            else if (mDisplayOrder == _DISPLAY_ORDER_LAST_TIME_USED) {
+//                if (localLOGV) Log.i(TAG, "Sorting by last time used");
+//                Collections.sort(mPackageStats, mLastTimeUsedComparator);
+//            } else if (mDisplayOrder == _DISPLAY_ORDER_APP_NAME) {
+//                if (localLOGV) Log.i(TAG, "Sorting by application name");
+//                Collections.sort(mPackageStats, mAppLabelComparator);
+//            }
             notifyDataSetChanged();
         }
     }
 
-    public List<UsageStats> getCurrentUsageStatistics() {
-        //Setting default start time
-        int BEGIN_HOUR = 0;
-        int BEGIN_MINUTE = 0;
-        Calendar cal = Calendar.getInstance();
-        cal.set(Calendar.HOUR, BEGIN_HOUR); // Change BEGIN_HOUR to the user designated hour
-        cal.set(Calendar.MINUTE, BEGIN_MINUTE); //Change BEGIN_MINUTE to the user designated minute
-        List<UsageStats> queryUsageStats = mUsageStatsManager
-                .queryUsageStats(UsageStatsManager.INTERVAL_DAILY, cal.getTimeInMillis(),
-                        System.currentTimeMillis());
-        return queryUsageStats;
-    }
+
 
     /** Called when the activity is first created. */
     @Override
@@ -299,7 +323,7 @@ public class UsageStatsActivity extends Activity implements OnItemSelectedListen
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        mAdapter.sortList(position);
+        mAdapter.sortList(0);
     }
 
     @Override

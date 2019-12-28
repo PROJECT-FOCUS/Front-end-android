@@ -19,23 +19,38 @@
 
         <Switch
             android:id="@+id/switch2"
-            android:background="@drawable/settings_group_background"
+            style="@style/SCBSwitch"
             android:layout_width="match_parent"
             android:layout_height="75dp"
+            android:background="@drawable/settings_group_background"
             android:checked="true"
             android:onClick="btnNotification"
             android:text="  push notification"
             android:textColor="@color/black"
-            android:textSize="17.3sp" />
+            android:textSize="17.3sp"
+            android:theme="@style/SCBSwitch" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="225dp"
             android:layout_marginTop="10dp"
             android:background="@drawable/settings_group_background"
             android:orientation="vertical">
 
+            <Switch
+                android:id="@+id/switch_active_mode"
+                android:layout_width="match_parent"
+                android:layout_height="75dp"
+                android:checked="true"
+                android:onClick="btnNotification"
+                android:text="  Active hours mode"
+                android:textColor="@color/black"
+                android:textSize="17.3sp"
+                android:theme="@style/SCBSwitch" />
+
             <LinearLayout
+                android:id="@+id/start_time_bar"
+                android:onClick="showTimePickerDialog"
                 android:layout_width="match_parent"
                 android:layout_height="75dp"
                 android:orientation="horizontal">
@@ -45,22 +60,30 @@
                     android:layout_height="match_parent"
                     android:checked="true"
                     android:gravity="center"
-                    android:text="  Active hours start time"
+                    android:text="  Monitor start time"
                     android:textColor="@color/black"
                     android:textSize="17.3sp" />
 
                 <com.team.focus.ui.customfonts.TextViewSFProDisplayMedium
                     android:id="@+id/start_time"
-                    android:layout_width="match_parent"
+                    android:layout_width="219dp"
                     android:layout_height="match_parent"
                     android:gravity="center|end"
-                    android:onClick="showTimePickerDialog"
                     android:textColor="@color/black"
                     android:textSize="17.3sp" />
+
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="38dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/ic_keyboard_arrow_right_black_24dp" />
 
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/end_time_bar"
+                android:onClick="showTimePickerDialog"
                 android:layout_width="match_parent"
                 android:layout_height="75dp"
                 android:orientation="horizontal">
@@ -70,18 +93,24 @@
                     android:layout_height="match_parent"
                     android:checked="true"
                     android:gravity="center"
-                    android:text="  Active hours end time"
+                    android:text="  Monitor end time"
                     android:textColor="@color/black"
                     android:textSize="17.3sp" />
 
                 <com.team.focus.ui.customfonts.TextViewSFProDisplayMedium
                     android:id="@+id/end_time"
-                    android:layout_width="match_parent"
+                    android:layout_width="227dp"
                     android:layout_height="match_parent"
                     android:gravity="center|end"
-                    android:onClick="showTimePickerDialog"
                     android:textColor="@color/black"
                     android:textSize="17.3sp" />
+
+                <ImageView
+                    android:id="@+id/imageView3"
+                    android:layout_width="38dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/ic_keyboard_arrow_right_black_24dp" />
             </LinearLayout>
         </LinearLayout>
 
@@ -99,7 +128,7 @@
         android:text="Log out"
         android:textAllCaps="false"
         android:textColor="#fbfbfb"
-        app:layout_constraintTop_toBottomOf="@+id/settings"
+        app:layout_constraintBottom_toBottomOf="parent"
         tools:layout_editor_absoluteX="8dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
