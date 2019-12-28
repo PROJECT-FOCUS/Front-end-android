@@ -100,35 +100,7 @@ public class UsageStatsActivity extends Activity implements OnItemSelectedListen
     private UsageStatsAdapter mAdapter;
     private PackageManager mPm;
 
-    public HashMap<String, Integer> getCurrentUsageStatistics() {
-            /*//Setting default start time
-            int BEGIN_HOUR = 0;
-            int BEGIN_MINUTE = 0;
-            Calendar cal = Calendar.getInstance();
-            cal.set(Calendar.HOUR, BEGIN_HOUR); // Change BEGIN_HOUR to the user designated hour
-            cal.set(Calendar.MINUTE, BEGIN_MINUTE); //Change BEGIN_MINUTE to the user designated minute*/
 
-        Pair<Long, Long>timeInterval = SharedPreferenceAccessUtils.getUserInterval();
-
-        List<UsageStats> queryUsageStats = mUsageStatsManager
-                .queryUsageStats(UsageStatsManager.INTERVAL_DAILY,timeInterval.first,
-                        timeInterval.second);
-
-        HashMap<String, Integer> map = new HashMap<>();
-        final int statCount = queryUsageStats.size();
-        for (int i = 0; i < statCount; i++){
-            final android.app.usage.UsageStats pkgStats = queryUsageStats.get(i);
-            try {
-                Integer actualTime = (int) pkgStats.getTotalTimeVisible() / 60000;
-                map.put(pkgStats.getPackageName(), Integer.valueOf(actualTime));
-            } catch(NameNotFoundException e){
-                //package may be gone.
-            }
-
-        }
-
-        return map;
-    }
 
     public static class AppNameComparator implements Comparator<UsageStats> {
         private Map<String, String> mAppLabelList;
