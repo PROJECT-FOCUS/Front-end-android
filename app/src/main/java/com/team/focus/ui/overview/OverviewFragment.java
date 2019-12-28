@@ -28,6 +28,7 @@ import java.util.Date;
 
 public class OverviewFragment extends Fragment {
 
+    private Fragment current = this;
     private ArrayList<OverviewItem> items;
     private RecyclerView recyclerView;
     private OverviewRecycleAdaptor adapter;
@@ -77,7 +78,7 @@ public class OverviewFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), AddMonitorAppActivity.class);
-                v.getContext().startActivity(intent);
+                current.startActivityForResult(intent, 122);
             }
         });
 
@@ -87,27 +88,35 @@ public class OverviewFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        String packageName;
-        int expectedMinute;
-        switch (resultCode) {
-            case 1 :
-                packageName = data.getExtras().getString("packageName");
-                items.remove((new OverviewItem(null, packageName,
-                        null, null, null)));
-                adapter = new OverviewRecycleAdaptor(this.getContext(), items, this, getFragmentManager());
-                recyclerView.setAdapter(adapter);
+        switch (requestCode) {
+            case 0 :
+            int expectedMinute;
+            String packageName;
+            switch (resultCode) {
+                case 1:
+                    packageName = data.getExtras().getString("packageName");
+                    items.remove((new OverviewItem(null, packageName,
+                            null, null, null)));
+                    adapter = new OverviewRecycleAdaptor(this.getContext(), items, this, getFragmentManager());
+                    recyclerView.setAdapter(adapter);
 
-            case 2 :
-                packageName = data.getExtras().getString("packageName");
-                expectedMinute = data.getExtras().getInt("expected");
-                int index = items.indexOf((new OverviewItem(null, packageName,
-                        null, null, null)));
-                if (index == -1) {
-                    return;
-                }
-                OverviewItem item = items.get(index);
+                case 2:
+                    packageName = data.getExtras().getString("packageName");
+                    expectedMinute = data.getExtras().getInt("expected");
+                    int index = items.indexOf((new OverviewItem(null, packageName,
+                            null, null, null)));
+                    if (index == -1) {
+                        return;
+                    }
+                    OverviewItem item = items.get(index);
 
-                item.setExpectedUsage(new Usage(expectedMinute));
+                    item.setExpectedUsage(new Usage(expectedMinute));
+                    adapter = new OverviewRecycleAdaptor(this.getContext(), items, this, getFragmentManager());
+                    recyclerView.setAdapter(adapter);
+            }
+
+            case 122 :
+                items = OverviewItem.OverviewItemUtils.getOverviewItemList(getContext());
                 adapter = new OverviewRecycleAdaptor(this.getContext(), items, this, getFragmentManager());
                 recyclerView.setAdapter(adapter);
         }

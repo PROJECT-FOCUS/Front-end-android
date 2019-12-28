@@ -13,7 +13,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.team.focus.MainActivity;
 import com.team.focus.R;
 import com.team.focus.data.model.AppInfo;
 import com.team.focus.data.model.SharedPreferenceAccessUtils;
@@ -80,24 +79,19 @@ public class AddMonitorRecycleAdaptor extends RecyclerView.Adapter<AddMonitorRec
                 // local update
                 String appPackageName = item.getPackageName();
                 Map<String, Usage> expectedUsage = new HashMap<>();
-                Map<String, Usage> actualUsage = new HashMap<>();
 
                 expectedUsage.put(appPackageName, new Usage(0));
 
-                // Todo: assign to @Xueting, gather actual usage from Monitor module
-                actualUsage.put(appPackageName, new Usage(0));
-
                 SharedPreferenceAccessUtils.addMonitoredApps(context,
                         new HashSet<String>(Arrays.asList(appPackageName)),
-                        expectedUsage, actualUsage);
+                        expectedUsage);
 
                 // cloud update
                 // Todo: assign to @Xueting, upload newly added monitored list to cloud
-                Intent intent = new Intent(context, MainActivity.class);
                 Toast.makeText(context, "App " + item.getAppName()
                         + "has successfully add to monitor list", Toast.LENGTH_SHORT).show();
-                context.startActivity(intent);
                 Activity parent = (Activity)context;
+                parent.setResult(122 , new Intent());
                 parent.finish();
             }
         });
