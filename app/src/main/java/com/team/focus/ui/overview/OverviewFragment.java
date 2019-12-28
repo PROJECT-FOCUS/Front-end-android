@@ -47,7 +47,6 @@ public class OverviewFragment extends Fragment {
         final TextView textViewInterval = root.findViewById(R.id.interval);
         final ImageButton addMonitor = root.findViewById(R.id.bntAddMonitor);
 
-        // ToDo: build data pipeline to server and monitor
         items = OverviewItem.OverviewItemUtils.getOverviewItemList(root.getContext());
 //        items = new ArrayList<>(Arrays.asList(new OverviewItem("Youtube",
 //                "com.google.youtube", new Usage(1, 0), new Usage(2, 0)),

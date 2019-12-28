@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">FOCUS</string>
-    <string name="launcher">Launcher</string>
+    <string name="launcher">FOCUS</string>
     <string name="title_overview">overview</string>
     <string name="title_recommendation">recommendation</string>
     <string name="title_account">account</string>
@@ -16,5 +16,11 @@
     <string name="login_failed">"Login failed"</string>
     <string name="button_logout">Logout</string>
     <string name="user_avatar">avatar</string>
+    <string name="quotes">Ordinary people think merely how they will spend their time,
+        a man of intellect tries to use it.</string>
+    <string name="terms">While FOCUS collects users\' usage, FOCUS will never disclose these information
+        to any party, organization, or person. By clicking Accept button below, you consent that FOCUS
+        to collect your data.
+    </string>
     <string name="login_banner">Login to your account</string>
 </resources>
