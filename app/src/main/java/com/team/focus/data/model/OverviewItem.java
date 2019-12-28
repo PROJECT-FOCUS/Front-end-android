@@ -38,8 +38,10 @@ public class OverviewItem {
             ArrayList<OverviewItem> list = new ArrayList<>();
 
             for (AppInfo app : apps) {
+                Usage actualUsage = actual.getOrDefault(app.getPackageName(), new Usage(0));
+
                 list.add(new OverviewItem(app.getAppName(), app.getPackageName(),
-                        expected.get(app.getPackageName()), actual.get(app.getPackageName()),
+                        expected.get(app.getPackageName()), actualUsage,
                         app.getIcon()));
             }
 
