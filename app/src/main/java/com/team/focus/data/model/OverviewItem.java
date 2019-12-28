@@ -33,7 +33,8 @@ public class OverviewItem {
             List<AppInfo> apps = InstalledApps.getMonitorAppInfo(packageNames, context);
             Map<String, Usage> expected = SharedPreferenceAccessUtils.getExpectedUsage(context);
 
-            Map<String, Usage> actual = UsageFromSystem.getMonitoredUsage(context);
+            // Todo: assign to @Xueting, gather actual usage from monitor module
+            Map<String, Usage> actual = SharedPreferenceAccessUtils.getActualUsage(context);
 
             ArrayList<OverviewItem> list = new ArrayList<>();
 
