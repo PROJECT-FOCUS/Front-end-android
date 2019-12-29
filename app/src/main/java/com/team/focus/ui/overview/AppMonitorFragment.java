@@ -20,9 +20,13 @@ import com.team.focus.R;
 import com.team.focus.data.model.OverviewItem;
 import com.team.focus.data.model.SharedPreferenceAccessUtils;
 import com.team.focus.data.model.Usage;
+import com.team.focus.data.pipeline.BackendExpectedUsageItem;
+import com.team.focus.data.pipeline.Update;
 import com.team.focus.ui.utils.ExpectedUsagePickerFragment;
 
+import java.time.Duration;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashSet;
 
 public class AppMonitorFragment extends DialogFragment {
@@ -90,7 +94,17 @@ public class AppMonitorFragment extends DialogFragment {
                 SharedPreferenceAccessUtils.updateAppExpectedUsage(context, item.getPackageName(), cache.toMinute());
 
                 // sync cloud
-                // Todo: assign to @Xueting
+                Thread thread = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Update.updateExpectedUsage(SharedPreferenceAccessUtils.getUserId(context),
+                                new Date().toString(), new HashSet<BackendExpectedUsageItem>(
+                                        Arrays.asList(new BackendExpectedUsageItem(item.getPackageName(),
+                                                Duration.ofMinutes(cache.toMinute())))
+                                ));
+                    }
+                });
+                thread.start();
 
                 Bundle bundle = new Bundle();
                 bundle.putString("packageName", item.getPackageName());
@@ -110,7 +124,6 @@ public class AppMonitorFragment extends DialogFragment {
                 SharedPreferenceAccessUtils.deleteMonitoredApps(context, new HashSet<String>(
                         Arrays.asList(packageName.getText().toString())));
 
-                // Todo: assign to @Xueting
                 // cloud sync
 
                 Bundle bundle = new Bundle();

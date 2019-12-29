@@ -17,10 +17,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.team.focus.R;
 import com.team.focus.data.model.RecommendationTip;
+import com.team.focus.data.model.SharedPreferenceAccessUtils;
+import com.team.focus.data.pipeline.Recommendation;
 import com.team.focus.ui.Adaptor.RecommendationListRecycleAdaptor;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
+import java.util.Set;
 
 public class RecommendationFragment extends Fragment {
 
@@ -39,9 +43,59 @@ public class RecommendationFragment extends Fragment {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(root.getContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+        suggestions = new ArrayList<>();
+
+//        Thread thread = new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                Set<String> tipSet = Recommendation.getRecommendations(SharedPreferenceAccessUtils.getUserId(root.getContext()));
+//
+//                // hardcoding for testing purpose
+//                if (tipSet.size() != 0) {
+//                    textView.setText("You have " + tipSet.size() + " suggestions based on your statistics");
+//                }
+//
+//                Iterator<String> iterator = tipSet.iterator();
+//                while (iterator.hasNext()) {
+//                    String suggestion = iterator.next();
+//                    if (suggestion.contains("Good")) {
+//                        suggestions.add(new RecommendationTip(suggestion,
+//                                getResources().getDrawable(R.drawable.ic_check_box_black_24dp)));
+//                    } else if (suggestion.contains("Oops")) {
+//                        suggestions.add(new RecommendationTip(suggestion,
+//                                getResources().getDrawable(R.drawable.ic_warning_yellow_24dp)));
+//                    } else {
+//                        suggestions.add(new RecommendationTip(suggestion,
+//                                getResources().getDrawable(R.drawable.ic_error_red_24dp)));
+//                    }
+//                }
+//            }
+//        });
+//
+//        thread.start();
+
+        Set<String> tipSet = Recommendation.getRecommendations(SharedPreferenceAccessUtils.getUserId(root.getContext()));
 
         // hardcoding for testing purpose
-        textView.setText("You have 3 suggestions based on your statistics");
+        if (tipSet.size() != 0) {
+            textView.setText("You have " + tipSet.size() + " suggestions based on your statistics");
+        }
+
+        Iterator<String> iterator = tipSet.iterator();
+        while (iterator.hasNext()) {
+            String suggestion = iterator.next();
+            if (suggestion.contains("Good")) {
+                suggestions.add(new RecommendationTip(suggestion,
+                        getResources().getDrawable(R.drawable.ic_check_box_black_24dp)));
+            } else if (suggestion.contains("Oops")) {
+                suggestions.add(new RecommendationTip(suggestion,
+                        getResources().getDrawable(R.drawable.ic_warning_yellow_24dp)));
+            } else {
+                suggestions.add(new RecommendationTip(suggestion,
+                        getResources().getDrawable(R.drawable.ic_error_red_24dp)));
+            }
+        }
+
         Resources resourcesManager = root.getContext().getResources();
         suggestions = new ArrayList<>(Arrays.asList(
                 new RecommendationTip("Total time of Game apps used was above expected",

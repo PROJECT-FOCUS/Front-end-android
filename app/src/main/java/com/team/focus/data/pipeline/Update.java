@@ -1,17 +1,14 @@
 package com.team.focus.data.pipeline;
 
-import java.io.IOException;
+import org.json.JSONArray;
+
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.HashSet;
 import java.util.Set;
-
-import org.json.JSONObject;
-import org.json.JSONArray;
 
 public class Update {
 
-    public void updateExpectedUsage(String username, String datetime, Set<BackendExpectedUsageItem> usageSet)   {
+    public static void updateExpectedUsage(String username, String datetime, Set<BackendExpectedUsageItem> usageSet)   {
 
         try {
             URL url = new URL(BackendUtility.URL_UPDATE);

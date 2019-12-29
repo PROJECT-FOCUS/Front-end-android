@@ -17,8 +17,12 @@ import com.team.focus.R;
 import com.team.focus.data.model.AppInfo;
 import com.team.focus.data.model.SharedPreferenceAccessUtils;
 import com.team.focus.data.model.Usage;
+import com.team.focus.data.pipeline.BackendExpectedUsageItem;
+import com.team.focus.data.pipeline.Update;
 
+import java.time.Duration;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -77,7 +81,7 @@ public class AddMonitorRecycleAdaptor extends RecyclerView.Adapter<AddMonitorRec
                 // minute(int)
 
                 // local update
-                String appPackageName = item.getPackageName();
+                final String appPackageName = item.getPackageName();
                 Map<String, Usage> expectedUsage = new HashMap<>();
 
                 expectedUsage.put(appPackageName, new Usage(0));
@@ -87,7 +91,19 @@ public class AddMonitorRecycleAdaptor extends RecyclerView.Adapter<AddMonitorRec
                         expectedUsage);
 
                 // cloud update
-                // Todo: assign to @Xueting, upload newly added monitored list to cloud
+
+                Thread thread = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Update.updateExpectedUsage(SharedPreferenceAccessUtils.getUserId(context),
+                                new Date().toString(), new HashSet<BackendExpectedUsageItem>(
+                                        Arrays.asList(new BackendExpectedUsageItem(appPackageName,
+                                                Duration.ofMinutes(0)))
+                                ));
+                    }
+                });
+                thread.start();
+
                 Toast.makeText(context, "App " + item.getAppName()
                         + "has successfully add to monitor list", Toast.LENGTH_SHORT).show();
                 Activity parent = (Activity)context;
