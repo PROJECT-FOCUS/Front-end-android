@@ -40,7 +40,7 @@ This project uses the Gradle build system. To build this project, use the "gradl
 Permission Required:
 Permission to access your app usage stats is required in order to determine whether the launched app is being used.
 
-## Sceenshorts 
+## Screenshorts 
 <img src="https://user-images.githubusercontent.com/10755454/71553628-43b96900-2a56-11ea-9f3d-8e9c50d5282e.png" alt="screen0" width="360" height="640">
 <img src="https://user-images.githubusercontent.com/10755454/71553649-7bc0ac00-2a56-11ea-87cf-683f3a123a12.png" alt="screen1" width="360" height="640">
 <img src="https://user-images.githubusercontent.com/10755454/71553650-7ebb9c80-2a56-11ea-9766-67638e3b8a96.png" alt="screen3" width="360" height="640">  
