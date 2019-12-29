@@ -58,7 +58,7 @@ public class MonitorService extends Service {
         Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setContentTitle("FOCUS Foreground Service")
                 .setContentText("FOCUS is standing in the foreground to monitor your app usage")
-                .setSmallIcon(R.mipmap.ic_launcher_square)
+                .setSmallIcon(R.drawable.ic_launcher)
                 .setStyle(new NotificationCompat.BigTextStyle().
                         bigText("FOCUS is standing in the foreground to monitor your app usage"))
                 .build();
@@ -90,7 +90,7 @@ public class MonitorService extends Service {
                 String packageName = app.getPackageName();
                 if (monitoredSet.get(packageName).compareTo(expected.get(packageName)) > 0) {
                     Notification notification = new NotificationCompat.Builder(context, CHANNEL_ID)
-                            .setSmallIcon(R.mipmap.ic_launcher_square)
+                            .setSmallIcon(R.drawable.ic_launcher)
                             .setLargeIcon(((BitmapDrawable) app.getIcon()).getBitmap())
                             .setContentTitle("FOCUS detected an over expected use")
                             .setContentText(app.getAppName() + " is used too much")

@@ -76,7 +76,7 @@ public class Account {
         } catch (Exception e) {
             e.printStackTrace();
             // test purpose without backend
-            return new LoggedInUser("111", first+" "+last);
+            return new LoggedInUser("local", first+" "+last);
         }
         return user;
     }
