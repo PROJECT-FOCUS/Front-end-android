@@ -27,6 +27,7 @@ public class SharedPreferenceAccessUtils {
                 Context.MODE_PRIVATE).edit();
         editor.putBoolean("didUserLogin", true);
         editor.putString("username", user.getDisplayName());
+        editor.putString("user_id", user.getUserId());
         editor.putBoolean("pushNotification", true);
         editor.putInt("startHour", 0);
         editor.putInt("endHour", 0);
@@ -43,6 +44,11 @@ public class SharedPreferenceAccessUtils {
         editor.putBoolean("didUserLogin", false);
         editor.putString("username", null);
         editor.commit();
+    }
+
+    public static String getUserId(Context context) {
+        return context.getSharedPreferences("FOCUS", Context.MODE_PRIVATE)
+                .getString("user_id", "");
     }
 
     /**

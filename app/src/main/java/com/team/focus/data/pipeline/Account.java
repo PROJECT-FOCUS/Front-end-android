@@ -2,13 +2,11 @@ package com.team.focus.data.pipeline;
 
 import com.team.focus.data.model.LoggedInUser;
 
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
-
-import org.json.JSONObject;
-import org.json.JSONArray;
-import org.json.JSONException;
 
 public class Account {
 
@@ -27,7 +25,7 @@ public class Account {
             if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
                 user = new LoggedInUser(username, BackendUtility.readFullname(response));
             } else {
-                /// warn out ?
+                user = null;
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -73,12 +71,12 @@ public class Account {
             if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
                 user = new LoggedInUser(username, first+" "+last);
             } else {
-                /// warn out ?
+                user = null;
             }
         } catch (Exception e) {
             e.printStackTrace();
             // test purpose without backend
-            return new LoggedInUser("111", "John Smith");
+            return new LoggedInUser("111", first+" "+last);
         }
         return user;
     }

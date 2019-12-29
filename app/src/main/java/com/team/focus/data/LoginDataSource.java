@@ -14,13 +14,27 @@ import java.io.IOException;
 public class LoginDataSource {
 
     private Context context;
+    private LoggedInUser user;
 
     public void setContext(Context context) {
         this.context = context;
     }
 
-    public Result<LoggedInUser> login(String username, String password) {
+    public Result<LoggedInUser> login(final String username, final String password) {
         try {
+
+            Thread thread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        user = Account.login(username, password);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        user = null;
+                    }
+                }
+            });
+            thread.start();
             LoggedInUser user = Account.login(username, password);
             SharedPreferenceAccessUtils.setLoginUser(context, user);
             return new Result.Success<>(user);
