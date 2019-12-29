@@ -19,7 +19,11 @@ public class BackendUtility {
 
     // Backend URLs
 
-    private static final String HOSTNAME = "http://127.0.0.1";
+    // https://developer.android.com/studio/run/emulator-networking
+    // use 10.0.2.2 if running on Android emulator:
+    private static final String HOSTNAME = "http://10.0.2.2";
+    // use 127.0.0.1 or localhost if running on Android cell phone
+    //private static final String HOSTNAME = "http://127.0.0.1";
     private static final String PORT_NUM = "8080"; // change it to your mysql port number
     private static final String PROJ_NAME = "Focus";
 
